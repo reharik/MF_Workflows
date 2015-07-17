@@ -28,9 +28,11 @@ module.exports = function(DDD, uuid, invariant){
                     this.raiseEvent(new DDD.CesEvent(trainerLoggedIn,{id:this._id, userName:cmd.userName, token:token, created:new Date()}));
                 },
                 'archiveTrainer': function (cmd) {
+                    expectNotArchived();
                     this.raiseEvent(vent2);
                 },
                 'unArchiveUser': function (cmd) {
+                    expectArchived();
                     this.raiseEvent(vent2);
                 }
             }
@@ -66,6 +68,16 @@ module.exports = function(DDD, uuid, invariant){
         expectNotLoggedIn() {
             invariant(_loggedIn,
                 new Error('Trainer already logged in'));
+        }
+
+        expectNotArchived() {
+            invariant(this._isArchived,
+                new Error('Trainer already archived'));
+        }
+
+        expectArchived() {
+            invariant(!this._isArchived,
+                new Error('Trainer is not archived archived'));
         }
 
     }

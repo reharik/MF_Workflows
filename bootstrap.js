@@ -1,10 +1,10 @@
 /**
  * Created by rharik on 6/23/15.
  */
-var _container = require('./src/jsioc/index');
+var _container = require('./node_modules/dependz/index');
 module.exports = new _container(x=>
-    x.pathToPackageJson('/package.json')
-            .forDependencyParam('DDD').requireThisInternalModule('/src/DDD/index')
-            .replace('lodash').withThis('_')
-            .replace('bluebird').withThis('Promise')
-            .complete());
+    x.pathToRoot(__dirname)
+        .forDependencyParam('DDD').requireThisInternalModule('/node_modules/DDD/index')
+        .replace('lodash').withThis('_')
+        .replace('bluebird').withThis('Promise')
+        .complete());
