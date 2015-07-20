@@ -1,10 +1,10 @@
 /**
  * Created by rharik on 6/23/15.
  */
-var _container = require('./node_modules/dependz/index');
+var _container = require('DAGon');
 module.exports = new _container(x=>
     x.pathToRoot(__dirname)
-        .forDependencyParam('DDD').requireThisInternalModule('/node_modules/DDD/index')
+        .requireDirectoryRecursively('./src')
         .replace('lodash').withThis('_')
         .replace('bluebird').withThis('Promise')
         .complete());

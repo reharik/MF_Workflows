@@ -2,14 +2,14 @@
  * Created by rharik on 7/13/15.
  */
 
-module.exports = function(DDD, uuid, invariant){
-    return class Trainer extends DDD.AggregateRootBase{
-        var _password;
-        var _loggedIn;
-        var _isArchived;
-
+module.exports = function(DDD, uuid, invariant) {
+    console.log(DDD)
+    return class Trainer extends DDD.AggregateRootBase {
         constructor() {
             super();
+            var _password;
+            var _loggedIn;
+            var _isArchived;
             this.type = 'Trainer';
         }
         static aggregateName() {
