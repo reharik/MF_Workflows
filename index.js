@@ -4,11 +4,4 @@
 
 
     var container = require('./bootstrap');
-    var gesDispatcher = container.getInstanceOf('gesDispatcher');
-
-  var dispatcher =  new gesDispatcher({
-        targetTypeName:'commandTypeName',
-        handlers:[container.getInstanceOf('LoginTrainerWorkflow')]
-    });
-
-  dispatcher.startDispatching();
+    container.getInstanceOf('index')();
