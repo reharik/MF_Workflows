@@ -4,22 +4,11 @@
 
 
     var container = require('./bootstrap');
-    var DDD = container.getInstanceOf('DDD');
-    //console.log('DDD');
-    //
-    //var ddd = DDD({
-    //    registry: x=> x.complete(),
-    //    configValues:{
-    //        "eventstore":{
-    //            "ip":"172.0.0.1"
-    //        }
-    //    }
-    //
-    //});
+    var gesDispatcher = container.getInstanceOf('gesDispatcher');
 
-  var dispatcher =  new DDD.gesDispatcher({
+  var dispatcher =  new gesDispatcher({
         targetTypeName:'commandTypeName',
         handlers:[container.getInstanceOf('LoginTrainerWorkflow')]
-
-
     });
+
+  dispatcher.startDispatching();

@@ -5,6 +5,8 @@ var _container = require('DAGon');
 module.exports = new _container(x=>
     x.pathToRoot(__dirname)
         .requireDirectoryRecursively('./src')
-        .replace('lodash').withThis('_')
-        .replace('bluebird').withThis('Promise')
+        .for('gesConnection').callInitMethod('openConnection')
+        .for('gesRepository').instantiateWith({eventTypeNameHeader: 'commandTypeName'})
+        .rename('lodash').withThis('_')
+        .rename('bluebird').withThis('Promise')
         .complete());

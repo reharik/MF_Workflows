@@ -2,9 +2,8 @@
  * Created by rharik on 7/13/15.
  */
 
-module.exports = function(DDD, uuid, invariant) {
-    console.log(DDD)
-    return class Trainer extends DDD.AggregateRootBase {
+module.exports = function(AggregateRootBase, GesEvent, uuid, invariant) {
+    return class Trainer extends AggregateRootBase {
         constructor() {
             super();
             var _password;
@@ -25,7 +24,7 @@ module.exports = function(DDD, uuid, invariant) {
                     expectNotLoggedIn();
                     expectCorrectPassword(cmd.password);
                     var token = createToken();
-                    this.raiseEvent(new DDD.CesEvent(trainerLoggedIn,{id:this._id, userName:cmd.userName, token:token, created:new Date()}));
+                    this.raiseEvent(new GesEvent(trainerLoggedIn,{id:this._id, userName:cmd.userName, token:token, created:new Date()}));
                 },
                 'archiveTrainer': function (cmd) {
                     expectNotArchived();
