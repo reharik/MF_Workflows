@@ -6,7 +6,7 @@ module.exports = function(gesDispatcher, commandHandlers){
     return function(){
         var dispatcher =  new gesDispatcher({
             targetTypeName:'commandTypeName',
-            handlers:[commandHandlers]
+            handlers:commandHandlers.map(x=>new x())
         });
 
         dispatcher.startDispatching();

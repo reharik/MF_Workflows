@@ -1,19 +1,20 @@
 /**
  * Created by parallels on 7/16/15.
  */
-module.exports = function(gesEventHandlerBase, gesRepository, Trainer) {
+module.exports = function(gesEventHandlerBase, gesRepository, Trainer, logger) {
     return class HireTrainerWorkflow extends gesEventHandlerBase {
         constructor() {
             super();
             this.handlesEvents = ['hireTrainer'];
             this.eventHandlerName = 'HireTrainerWorkflow';
+            logger.info('HireTrainerWorkflow started up');
         }
 
-        hireTrainer(vnt) {
-            this.createNotification(vnt);
+        hireTrainer(cmd) {
+            var continuationId = this.createNotification(cmd);
             var trainer = new Trainer();
-            trainer.hireTrainer(vnt);
-            gesRepository.save(trainer);
+            trainer.hireTrainer(cmd);
+            gesRepository.save(trainer, uuid.v4(), {continuationId:continuationId});
         }
     }
 };

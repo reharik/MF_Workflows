@@ -25,7 +25,6 @@ module.exports = function(invariant,
                 this.options.handlers,
                 "Dispatcher requires at least one handler"
             );
-            this.connection = gesConnection;
         }
 
         getConn(){
@@ -47,13 +46,13 @@ module.exports = function(invariant,
                 }
             };
 
-            this.connection.setStreamMetadata('$all', setData)
+            gesConnection.setStreamMetadata('$all', setData)
         }
 
         startDispatching() {
             logger.info('startDispatching called');
             //this.setMetadata();
-                var subscription = this.connection.subscribeToAllFrom();
+                var subscription = gesConnection.subscribeToAllFrom();
             //var subscription = this.connection.subscribeToStreamFrom(this.options.stream);
 
             //Dispatcher gets raw events from ges in the EventData Form

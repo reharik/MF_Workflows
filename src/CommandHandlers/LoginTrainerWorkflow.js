@@ -2,12 +2,13 @@
  * Created by parallels on 7/16/15.
  */
 
-module.exports = function(gesEventHandlerBase, gesRepository, Trainer) {
+module.exports = function(gesEventHandlerBase, gesRepository, Trainer, logger) {
     return class LoginTrainerWorkflow extends gesEventHandlerBase {
         constructor() {
             super();
             this.handlesEvents = ['loginTrainer'];
             this.eventHandlerName = 'LoginTrainerWorkflow';
+            logger.info('LoginTrainerWorkflow started up');
         }
 
         loginTrainer(vnt) {
