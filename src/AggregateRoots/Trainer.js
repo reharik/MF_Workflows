@@ -18,13 +18,13 @@ module.exports = function(AggregateRootBase, GesEvent, uuid, invariant) {
         commandHandlers() {
             return {
                 'hireTrainer': function (cmd) {
-                    this.raiseEvent(vent1);
+                    this.raiseEvent(new GesEvent('hireTrainer',{credentials:cmd.credentials, contact:cmd.contact, address:cmd.address, dob:cmd.dob}));
                 },
                 'loginTrainer': function (cmd) {
                     expectNotLoggedIn();
                     expectCorrectPassword(cmd.password);
                     var token = createToken();
-                    this.raiseEvent(new GesEvent(trainerLoggedIn,{id:this._id, userName:cmd.userName, token:token, created:new Date()}));
+                    this.raiseEvent(new GesEvent('trainerLoggedIn',{id:this._id, userName:cmd.userName, token:token, created:new Date()}));
                 },
                 'archiveTrainer': function (cmd) {
                     expectNotArchived();

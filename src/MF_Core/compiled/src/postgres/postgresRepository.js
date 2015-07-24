@@ -8,7 +8,7 @@ module.exports = function(pgbluebird, config, uuid, logger){
             var pgb = new pgbluebird();
             var cnn;
 
-            pgb.connect(config.get('postgres.connectionString')+config.get('postgres.methodFitness'))
+            pgb.connect(config.get('postgress'))
                 .then(function (connection) {
                     cnn = connection;
                     return cnn.client.query("SELECT * from "+table+" where Id = "+id);
@@ -29,7 +29,7 @@ module.exports = function(pgbluebird, config, uuid, logger){
             var pgb = new pgbluebird();
             var cnn;
 
-            pgb.connect(config.get('postgres.connectionString')+config.get('postgres.methodFitness'))
+            pgb.connect(config.get('postgress.connectionString'))
                 .then(function (connection) {
                     cnn = connection;
                     if(id){
@@ -48,24 +48,25 @@ module.exports = function(pgbluebird, config, uuid, logger){
                 });
         },
 
-        checkIdempotency(originalPosition, eventHandlerName){
+        isIdempotent(originalPosition, eventHandlerName){
             var pgb = new pgbluebird();
             var cnn;
-            return pgb.connect(config.get('postgres.connectionString')+config.get('postgres.methodFitness'))
+            console.log("config.get('postgress')xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+            console.log(config);
+            return pgb.connect(config.get('postgres.connectionString'))
                 .then(function (connection) {
                     cnn = connection;
                     logger.info('getting last processed postion for eventHandler ' + eventHandlerName);
-                    return cnn.client.query("SELECT * from \"lastProcessedPosition\" where \"handlerType\" = '"+eventHandlerName+"'");
+                    return cnn.client.query("SELECT * from lastProcessedPosition where handlerType = eventHandlerName");
                 })
                 .then(function (result) {
                     var row = result.rows;
                     logger.trace('last process position for eventHandler ' + eventHandlerName +': '+row.commitPosition);
                     cnn.done();
                     // lame use async await
-                    var isNewStream = !row || row.length<=0;
-                    var isIdempotent = isNewStream || row.CommitPosition < originalPosition.CommitPosition;
+                    var isIdempotent = row && row.CommitPosition < originalPosition.CommitPosition;
                     logger.info('eventHandler ' + eventHandlerName + ' event idempotence is: '+isIdempotent);
-                    return {isIdempotent:isIdempotent, isNewStream:isNewStream};
+                    return isIdempotent;
                 })
                 .catch(function (error) {
                     logger.error('error received during last process position call for eventHandler ' + eventHandlerName +': '+error.message);
@@ -73,32 +74,24 @@ module.exports = function(pgbluebird, config, uuid, logger){
                 });
         },
 
-        recordEventProcessed(originalPosition, eventHandlerName, insert){
+        recordEventProcessed(originalPosition, eventHandlerName){
             var pgb = new pgbluebird();
             var cnn;
-            if (!originalPosition.commitPosition) {
+
+            if (!originalPosition.HasValue) {
                 throw new Error("ResolvedEvent didn't come off a subscription at all (has no position).");
             }
 
-            pgb.connect(config.get('postgres.connectionString')+config.get('postgres.methodFitness'))
+            pgb.connect(config.get('postgress.connectionString'))
                 .then(function (connection) {
                     cnn = connection;
                     logger.trace('setting last process position for eventHandler ' + eventHandlerName +': '+originalPosition.commitPosition);
 
-                    var script = insert
-                        ? "INSERT INTO \"lastProcessedPosition\" " +
-                            "(\"id\", \"commitPosition\", \"preparePosition\", \"handlerType\") VALUES ('"
-                            + uuid.v4() + "', "
-                            + originalPosition.commitPosition + ", "
-                            + originalPosition.preparePosition + ", "
-                            + "'" + eventHandlerName +"')"
-                        : "UPDATE \"lastProcessPosition\" " +
-                            "SET commitPosition = " + originalPosition.commitPosition +
-                            ", preparePosition = " + originalPosition.preparePosition +
-                            " WHERE handlerType = '" + eventHandlerName +"'";
-
-                    console.log(script);
-                    cnn.client.query(script);
+                    cnn.client.query("UPDATE lastProcessPosition " +
+                        "SET commitPosition = "+originalPosition.CommitPosition +
+                        ", preparePosition = "+originalPosition.PreparePosition +
+                        ", eventHandler = "+eventHandlerName +
+                        "WHERE Id = "+row.Id);
                 })
                 .then(function (result) {
                     cnn.done();

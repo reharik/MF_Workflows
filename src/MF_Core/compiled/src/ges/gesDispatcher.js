@@ -3,7 +3,7 @@
  */
 
 module.exports = function(invariant,
-JSON,                          _,
+                          _,
                           rx,
                           GesEvent,
                           gesclient,
@@ -20,8 +20,7 @@ JSON,                          _,
                 targetType: 'eventTypeName'
             };
             _.assign(this.options, _options);
-            logger.debug('gesDispatcher base options after merge ');
-            logger.debug(JSON.stringify(this.options));
+            logger.debug('gesDispatcher base options after merge ' + this.options);
             invariant(
                 this.options.handlers,
                 "Dispatcher requires at least one handler"
@@ -62,15 +61,15 @@ JSON,                          _,
             var relevantEvents = rx.Observable.fromEvent(subscription, 'event')
                 .filter(this.filterEvents, this)
                 .map(this.createGesEvent, this);
-            relevantEvents.forEach(vent =>  this.serveEventToHandlers(vent,this.options.handlers),
+            relevantEvents.forEach(vent => this.serveEventToHandlers(vent,this.options.handlers),
                     error => { throw error; }
             );
 
         }
 
         filterEvents(payload) {
-            //
-            //logger.trace('filtering event for system events ($)');logger.info('event received by dispatcher');
+            //logger.info('event received by dispatcher');
+            //logger.trace('filtering event for system events ($)');
             if (!payload.Event || !payload.Event.EventType || payload.Event.EventType.startsWith('$')) {
                 return false;
             }

@@ -14,12 +14,12 @@ module.exports = function appendToStreamPromise(Promise, invariant, logger, gesC
             'must pass data with an expected version of aggregate'
         );
         invariant(
-            data.events && data.events.length > 0,
+            data.events&& data.events.length > 0,
             'must pass data with at least one event'
         );
-        console.log(data);
         logger.trace('wrapping appendToStream in Promise');
         return new Promise(function (resolve, reject) {
+            console.log(gesConnection);
             gesConnection.appendToStream(streamName, data, function (err, result) {
                 logger.trace('appendToStream callback');
                 if (err) {
