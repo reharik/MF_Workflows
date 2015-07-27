@@ -16,12 +16,10 @@ module.exports = function(NotificationEvent,
             this.eventHandlerName;
         }
 
-        async handleEvent(gesEvent) {
+        handleEvent(gesEvent) {
             logger.debug('checking event for idempotence');
-
-            var idempotency = await readModelRepository.checkIdempotency(gesEvent.originalPosition, this.eventHandlerName);
+            var idempotency = readModelRepository.checkIdempotency(gesEvent.originalPosition, this.eventHandlerName);
             if (!idempotency.isIdempotent) {
-                logger.trace('event NOT idempotent');
                 return;
             }
             logger.trace('event idempotent');
@@ -32,7 +30,7 @@ module.exports = function(NotificationEvent,
                 this[gesEvent.eventTypeName](gesEvent);
 
                 logger.trace('event Handled by: ' + gesEvent.eventTypeName + ' on ' + this.eventHandlerName);
-                readModelRepository.recordEventProcessed(gesEvent.originalPosition, this.eventHandlerName, idempotency.isNewStream);
+                readModelRepository.recordEventProcessed(gesEvent, this.eventHandlerName, idempotency.isNewStream);
 
             } catch (exception) {
                 logger.error('event: ' + JSON.stringify(gesEvent) + ' threw exception: ' + exception);

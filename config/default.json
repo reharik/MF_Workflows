@@ -5,7 +5,7 @@
     "adminPassword":"changeit"
   },
   "postgres":{
-    "connectionString":"postgres://postgres:password@172.17.0.5/",
+    "connectionString":"postgres://postgres:password@172.17.0.10/",
     "postgres":"postgres",
     "methodFitness":"MethodFitness"
   }

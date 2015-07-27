@@ -24,9 +24,9 @@ path) {
 
         bootstrapApplication(vnt) {
             //this.setMetadata();
-            this.hireTrainer();
-            //this.buildDb();
-            //this.addStates();
+            //this.hireTrainer();
+            this.buildDb();
+            this.addStates();
         }
 
         setMetadata() {

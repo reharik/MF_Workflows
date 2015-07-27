@@ -8,7 +8,7 @@ module.exports = function(pgbluebird, config, uuid, logger){
             var pgb = new pgbluebird();
             var cnn;
 
-            pgb.connect(config.get('postgres.connectionString')+config.get('postgres.methodFitness'))
+            pgb.connect(config.get('postgress'))
                 .then(function (connection) {
                     cnn = connection;
                     return cnn.client.query("SELECT * from "+table+" where Id = "+id);
@@ -29,7 +29,7 @@ module.exports = function(pgbluebird, config, uuid, logger){
             var pgb = new pgbluebird();
             var cnn;
 
-            pgb.connect(config.get('postgres.connectionString')+config.get('postgres.methodFitness'))
+            pgb.connect(config.get('postgress.connectionString'))
                 .then(function (connection) {
                     cnn = connection;
                     if(id){
@@ -51,11 +51,11 @@ module.exports = function(pgbluebird, config, uuid, logger){
         checkIdempotency(originalPosition, eventHandlerName){
             var pgb = new pgbluebird();
             var cnn;
-            return pgb.connect(config.get('postgres.connectionString')+config.get('postgres.methodFitness'))
+            pgb.connect(config.get('postgres.connectionString'))
                 .then(function (connection) {
                     cnn = connection;
                     logger.info('getting last processed postion for eventHandler ' + eventHandlerName);
-                    return cnn.client.query("SELECT * from \"lastProcessedPosition\" where \"handlerType\" = '"+eventHandlerName+"'");
+                    return cnn.client.query("SELECT * from lastProcessedPosition where handlerType = eventHandlerName");
                 })
                 .then(function (result) {
                     var row = result.rows;
@@ -73,32 +73,24 @@ module.exports = function(pgbluebird, config, uuid, logger){
                 });
         },
 
-        recordEventProcessed(originalPosition, eventHandlerName, insert){
+        recordEventProcessed(originalPosition, eventHandlerName, isNewSteam){
             var pgb = new pgbluebird();
             var cnn;
-            if (!originalPosition.commitPosition) {
+
+            if (!isNewSteam &&!originalPosition.HasValue) {
                 throw new Error("ResolvedEvent didn't come off a subscription at all (has no position).");
             }
 
-            pgb.connect(config.get('postgres.connectionString')+config.get('postgres.methodFitness'))
+            pgb.connect(config.get('postgress.connectionString'))
                 .then(function (connection) {
                     cnn = connection;
                     logger.trace('setting last process position for eventHandler ' + eventHandlerName +': '+originalPosition.commitPosition);
 
-                    var script = insert
-                        ? "INSERT INTO \"lastProcessedPosition\" " +
-                            "(\"id\", \"commitPosition\", \"preparePosition\", \"handlerType\") VALUES ('"
-                            + uuid.v4() + "', "
-                            + originalPosition.commitPosition + ", "
-                            + originalPosition.preparePosition + ", "
-                            + "'" + eventHandlerName +"')"
-                        : "UPDATE \"lastProcessPosition\" " +
-                            "SET commitPosition = " + originalPosition.commitPosition +
-                            ", preparePosition = " + originalPosition.preparePosition +
-                            " WHERE handlerType = '" + eventHandlerName +"'";
-
-                    console.log(script);
-                    cnn.client.query(script);
+                    cnn.client.query("UPDATE lastProcessPosition " +
+                        "SET commitPosition = "+originalPosition.CommitPosition +
+                        ", preparePosition = "+originalPosition.PreparePosition +
+                        ", eventHandler = "+eventHandlerName +
+                        "WHERE Id = "+row.Id);
                 })
                 .then(function (result) {
                     cnn.done();
