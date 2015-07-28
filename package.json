@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "test": "mocha --opts integrationTests/mocha.opts integrationTests",
-    "intTestSpecific": "mocha --opts integrationTests/mocha.opts ",
-    "npmInstall": "npm install && npm install ../DAGon/compiled && cp -R ../MF_Core/compiled src/MF_Core"
+    "intTestSpecific": "mocha --opts integrationTests/mocha.opts "
   },
   "dependencies": {
     "JSON": "^1.0.0",
