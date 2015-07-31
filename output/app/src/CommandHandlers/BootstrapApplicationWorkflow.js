@@ -23,7 +23,7 @@ path) {
         }
 
         bootstrapApplication(vnt) {
-            this.setMetadata();
+            //this.setMetadata();
             //this.hireTrainer();
             this.buildDb();
             this.addStates();
@@ -43,7 +43,7 @@ path) {
                 }
             };
 
-            gesConnection.setStreamMetadata('$all', setData, function(){console.log('metadata set')});
+            gesConnection.setStreamMetadata('$all', setData)
         }
 
         hireTrainer() {
