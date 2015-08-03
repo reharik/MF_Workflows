@@ -11,12 +11,7 @@ var DEBUG = process.env.NODE_ENV === "development";
 
 gulp.task('clean', function(cb) {
     del([config.get("deploy.output.deploy"),
-        config.get("deploy.buildDirectory"),
-        '!'+config.get("deploy.buildDirectory")+'/app/node_modules'],{force:true}, cb);
-});
-
-gulp.task('cleanNpm', function(cb) {
-    del([config.get("deploy.buildDirectory")+'/app/node_modules'],{force:true}, cb);
+        config.get("deploy.buildDirectory")],{force:true}, cb);
 });
 
 gulp.task("copy-source",["clean"], function () {
@@ -43,12 +38,7 @@ gulp.task("copy-to-buildDir",["copy-source","copy-root","copy-config","copy-depl
         .pipe(gulp.dest(config.get("deploy.buildDirectory")));
 });
 
-gulp.task('runNpmInstall',["copy-to-buildDir"],function(){
-    return run('cd '+ config.get("deploy.buildDirectory") +'/app && npm install && npm install -g babel').exec()
-});
-
 ////////////////////////////////////////////////////
-
 
 gulp.task('clean-mf_core', function (cb) {
     del(['src/modules/ges/**/*'], cb);
@@ -62,8 +52,4 @@ gulp.task('copy-mf_core',['clean-mf_core'], function () {
 
 gulp.task('pull-mf_core', ["clean-mf_core","copy-mf_core"]);
 
-gulp.task("deploy",["copy-to-buildDir"]);
-
-gulp.task("deployWithNpm",['cleanNpm', "copy-to-buildDir", 'runNpmInstall']);
-
-
+gulp.task("deploy",['pull-mf_core', "copy-to-buildDir"]);

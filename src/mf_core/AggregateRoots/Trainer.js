@@ -18,7 +18,7 @@ module.exports = function(AggregateRootBase, GesEvent, uuid, invariant) {
         commandHandlers() {
             return {
                 'hireTrainer': function (cmd) {
-                    this.raiseEvent(new GesEvent('hireTrainer',{credentials:cmd.credentials, contact:cmd.contact, address:cmd.address, dob:cmd.dob}));
+                    this.raiseEvent(new GesEvent('trainerHired',{credentials:cmd.credentials, contact:cmd.contact, address:cmd.address, dob:cmd.dob}));
                 },
                 'loginTrainer': function (cmd) {
                     expectNotLoggedIn();
@@ -28,11 +28,11 @@ module.exports = function(AggregateRootBase, GesEvent, uuid, invariant) {
                 },
                 'archiveTrainer': function (cmd) {
                     expectNotArchived();
-                    this.raiseEvent(vent2);
+                    this.raiseEvent(new GesEvent('trainerArchived',{id:this._id, archivedDate:new Date()}));
                 },
                 'unArchiveUser': function (cmd) {
                     expectArchived();
-                    this.raiseEvent(vent2);
+                    this.raiseEvent(new GesEvent('trainerUnarchived',{id:this._id, unArchivedDate:new Date()}));
                 }
             }
         }
@@ -48,7 +48,7 @@ module.exports = function(AggregateRootBase, GesEvent, uuid, invariant) {
                     this._isArchived = true;
                 }.bind(this),
 
-                'userUnArchived': function (event) {
+                'userUnarchived': function (event) {
                     this._isArchived = false;
                 }.bind(this)
             }
