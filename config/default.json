@@ -1,6 +1,6 @@
 {
   "eventstore":{
-    "host":"172.17.1.115",
+    "host":"eventstore",
     "systemUsers": {"admin":"admin"},
     "adminPassword":"changeit"
   },

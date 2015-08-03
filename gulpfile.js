@@ -3,38 +3,67 @@
  */
 
 var gulp = require("gulp");
-var babel = require('gulp-babel');
 // Config
 var config = require("config");
-var clean = require('gulp-contrib-clean');
-
+var del = require('del');
 
 var DEBUG = process.env.NODE_ENV === "development";
 
-gulp.task('clean', function() {
-    gulp.src(config.get("deploy.output.deploy"))
-        .pipe(clean());
+gulp.task('clean', function(cb) {
+    del([config.get("deploy.output.deploy"),
+        config.get("deploy.buildDirectory"),
+        '!'+config.get("deploy.buildDirectory")+'/app/node_modules'],{force:true}, cb);
 });
 
-gulp.task("copy-source", ["clean"], function () {
-    gulp.src("src/**")
+gulp.task('cleanNpm', function(cb) {
+    del([config.get("deploy.buildDirectory")+'/app/node_modules'],{force:true}, cb);
+});
+
+gulp.task("copy-source",["clean"], function () {
+    return gulp.src("src/**")
         .pipe(gulp.dest(config.get("deploy.output.app")+"/src"));
-    gulp.src(["package.json", "index.js", "bootstrap.js"])
+});
+gulp.task("copy-root",["clean"], function () {
+    return gulp.src(["package.json", "index.js", "bootstrap.js"])
         .pipe(gulp.dest(config.get("deploy.output.app")));
-    return gulp.src("config/**")
+});
+
+gulp.task("copy-config",["clean"], function () {
+    return  gulp.src("config/**")
         .pipe(gulp.dest(config.get("deploy.output.app")+"/config"));
 });
 
-gulp.task("copy-deployfiles",["copy-source"],function () {
+gulp.task("copy-deploy",["clean"], function () {
     return gulp.src("deploy/*")
         .pipe(gulp.dest(config.get("deploy.output.deploy")));
 });
 
-gulp.task("copy-to-buildDir", ["copy-deployfiles"], function () {
+gulp.task("copy-to-buildDir",["copy-source","copy-root","copy-config","copy-deploy"], function () {
     return gulp.src(config.get("deploy.output.deploy")+"/**")
         .pipe(gulp.dest(config.get("deploy.buildDirectory")));
 });
 
-gulp.task("deploy",["clean", "copy-to-buildDir"]);
+gulp.task('runNpmInstall',["copy-to-buildDir"],function(){
+    return run('cd '+ config.get("deploy.buildDirectory") +'/app && npm install && npm install -g babel').exec()
+});
+
+////////////////////////////////////////////////////
+
+
+gulp.task('clean-mf_core', function (cb) {
+    del(['src/modules/ges/**/*'], cb);
+});
+
+gulp.task('copy-mf_core',['clean-mf_core'], function () {
+    gulp.src(['../MF_Core/compiled/src/**/*'], { "base" : "../MF_Core/compiled/src" }).pipe(gulp.dest('src/mf_core'));
+});
+
+/////////////////////////////////////////////////
+
+gulp.task('pull-mf_core', ["clean-mf_core","copy-mf_core"]);
+
+gulp.task("deploy",["copy-to-buildDir"]);
+
+gulp.task("deployWithNpm",['cleanNpm', "copy-to-buildDir", 'runNpmInstall']);
 
 

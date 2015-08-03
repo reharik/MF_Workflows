@@ -25,12 +25,11 @@ module.exports = function(invariant,
                 this.options.handlers,
                 "Dispatcher requires at least one handler"
             );
-            console.log(gesConnection);
-
         }
 
         startDispatching() {
             logger.info('startDispatching called');
+            //this.setMetadata();
             var subscription = gesConnection.subscribeToAllFrom();
             //var subscription = this.connection.subscribeToStreamFrom(this.options.stream);
 
@@ -90,11 +89,12 @@ module.exports = function(invariant,
 
             handlers
                 .filter(h=> {
-                    logger.info('calling event handler :' + h.eventHandlerName);
-                    return h.handlesEvents.find(he=>he == vent[this.options.targetType])
+                    logger.info('calling event handler :' + h.eventHandlerName + ' with eventTypeName: ' + vent.eventTypeName);
+                    logger.trace(h.eventHandlerName = ' handles these events: '+ h.handlesEvents);
+                    return h.handlesEvents.find(he=>he == vent.eventTypeName)
                 })
                 .forEach(m=> {
-                    logger.debug('event handler does handle event type: ' + vent[this.options.targetType]);
+                    logger.debug('event handler does handle event type: ' + vent.eventTypeName);
                     m.handleEvent(vent);
                     logger.debug('event handler finished handleing event');
                 });

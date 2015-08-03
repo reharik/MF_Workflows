@@ -11,9 +11,7 @@ module.exports = function(gesEventHandlerBase,
                           fs,
                           uuid,
                           config,
-                          logger,
-                          gesConnection,
-path) {
+                          logger) {
     return class BootstrapApplicationWorkflow extends gesEventHandlerBase {
         constructor() {
             super();
@@ -23,27 +21,8 @@ path) {
         }
 
         bootstrapApplication(vnt) {
-            this.setMetadata();
-            //this.hireTrainer();
-            this.buildDb();
+            this.hireTrainer();
             this.addStates();
-        }
-
-        setMetadata() {
-            var setData = {
-                expectedMetastreamVersion: -1
-                , metadata: gesclient.createStreamMetadata({
-                    acl: {
-                        readRoles: gesclient.systemRoles.all
-                    }
-                })
-                , auth: {
-                    username: config.get('eventstore.systemUsers.admin')
-                    , password: config.get('eventstore.adminPassword')
-                }
-            };
-
-            gesConnection.setStreamMetadata('$all', setData, function(){console.log('metadata set')});
         }
 
         hireTrainer() {
@@ -54,39 +33,6 @@ path) {
                 ,dob:new Date()});
             console.log(gesRepository.toString());
             gesRepository.save(trainer);
-        }
-
-        buildDb(){
-            var pgb = new pgbluebird();
-            var cnn;
-            var _path = 'src/sql/';
-            pgb.connect(config.get('postgres.connectionString')+config.get('postgres.postgres'))
-                .then(function (connection) {
-                    cnn = connection;
-                    var script = fs.readFileSync(path.join(_path,'createRole.sql'));
-                    return cnn.client.query(script.toString('utf8'));
-                })
-                .then(function(res){
-                    //create db
-                    var script = fs.readFileSync(path.join(_path,'createMethodFitnessDb.sql'));
-                    return cnn.client.query(script.toString('utf8'));
-                })
-                .then(function(res){
-                    //create db
-                    cnn.done;
-                    return pgb.connect(config.get('postgres.connectionString')+config.get('postgres.methodFitness'))
-                })
-                .then(function (connection) {
-                    cnn = connection;
-                    var script = fs.readFileSync(path.join(_path,'buildSchema.sql'));
-                    return cnn.client.query(script.toString('utf8'));
-                })
-               .catch(function(err){
-                    console.log(err)
-                })
-                .finally(function() {
-                    cnn.done();
-                });
         }
 
         addStates(){

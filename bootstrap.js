@@ -8,7 +8,7 @@ module.exports = new _container(x=>
         .groupAllInDirectory('./src/CommandHandlers', 'commandHandlers')
         .for('gesConnection').instantiate(x=>x.initializeWithMethod('openConnection'))
         .for('gesRepository').instantiate(x=>x.asFunc())
-        .for('readModelRepository').require("/src/MF_Core/src/postgres/postgresRepository")
+        .for('readModelRepository').require("/src/mf_core/postgres/postgresRepository")
         .rename('lodash').withThis('_')
         .rename('bluebird').withThis('Promise')
         .complete());
