@@ -1,4 +1,5 @@
 {
+  "env":"dev",
   "eventstore":{
     "host":"eventstore",
     "systemUsers": {"admin":"admin"},
@@ -14,6 +15,6 @@
       "app":"output/app",
       "deploy":"output"
     },
-    "buildDirectory":"../MF_BuildFiles/Domain"
+    "buildDirectory":"../MF_BuildFiles/Workflows"
   }
 }

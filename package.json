@@ -1,5 +1,5 @@
 {
-  "name": "MF_Domain",
+  "name": "MF_Workflows",
   "version": "0.0.1",
   "scripts": {
     "start": "babel-node --harmony index.js --stage 0",
@@ -16,7 +16,8 @@
     "lodash": "^3.10.0",
     "pg-bluebird": "^1.0.8",
     "rx": "^2.5.3",
-    "uuid": "^2.0.1"
+    "uuid": "^2.0.1",
+    "yowl": "^1.0.29"
   },
   "devDependencies": {
     "babel": "^5.5.6",
