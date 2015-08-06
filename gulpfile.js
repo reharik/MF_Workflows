@@ -44,8 +44,8 @@ gulp.task('clean-mf_inf', function (cb) {
     del(['src/mf_infrastructure'], cb);
 });
 
-gulp.task('copy-mf_inf',['clean-mf_inf'], function () {
-    gulp.src(['../MF_Infrastructure/output/src/**/*'], { "base" : "../MF_Infrastructure/output/src" }).pipe(gulp.dest('src/mf_infrastructure'));
+gulp.task('copy-mf_inf',function () {
+    return gulp.src(['../MF_Infrastructure/output/src/**/*'], { "base" : "../MF_Infrastructure/output/src" }).pipe(gulp.dest('src/mf_infrastructure'));
 });
 
 ////////////////////////////////////////////////////
@@ -54,8 +54,8 @@ gulp.task('clean-mf_domain', function (cb) {
     del(['src/mf_domain'], cb);
 });
 
-gulp.task('copy-mf_domain',['clean-mf_domain'], function () {
-    gulp.src(['../MF_Domain/output/src/**/*'], { "base" : "../MF_Domain/output/src" }).pipe(gulp.dest('src/mf_domain'));
+gulp.task('copy-mf_domain',function () {
+    return gulp.src(['../MF_Domain/output/src/**/*'], { "base" : "../MF_Domain/output/src" }).pipe(gulp.dest('src/mf_domain'));
 });
 
 /////////////////////////////////////////////////
@@ -65,4 +65,4 @@ gulp.task('pull-mf_inf', ["clean-mf_inf","copy-mf_inf"]);
 
 gulp.task('pull-mf_domain', ["clean-mf_domain","copy-mf_domain"]);
 
-gulp.task("deploy",['pull-mf_inf','pull-mf_domain', "copy-to-buildDir"]);
+gulp.task("deploy",['copy-mf_inf','copy-mf_domain', "copy-to-buildDir"]);

@@ -12,7 +12,8 @@ module.exports = function(yowl,config){
         });
         _yowl.addConsoleSink({
             level : "silly",
-            colorize : true
+            colorize : true,
+            formatter: function(m){console.log(m); return m.message}
         }).info("added Console Sink")
             .addDailyRotateFileSink({
                 level : "info",
