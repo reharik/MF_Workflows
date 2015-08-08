@@ -14,6 +14,7 @@
     "ges-client": "^0.9.1",
     "invariant": "^2.1.0",
     "lodash": "^3.10.0",
+    "moment": "^2.10.6",
     "pg-bluebird": "^1.0.8",
     "rx": "^2.5.3",
     "uuid": "^2.0.1",
