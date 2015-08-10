@@ -13,9 +13,9 @@ module.exports = function(gesEventHandlerBase, gesRepository, Trainer, logger) {
 
         loginTrainer(vnt) {
             this.createNotification(vnt);
-            var trainer = this.repository.getById(Trainer, vnt.Id);
+            var trainer = gesRepository.getById(Trainer, vnt.Id);
             trainer.loginTrainer(vnt);
-            gesRepository(trainer);
+            gesRepository.save(trainer, {continuationId});
         }
     }
 };

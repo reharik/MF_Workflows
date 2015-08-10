@@ -11,10 +11,10 @@ module.exports = function(gesEventHandlerBase, gesRepository, Trainer, logger) {
         }
 
         hireTrainer(cmd) {
-            var continuationId = this.createNotification(cmd);
+            this.createNotification(cmd);
             var trainer = new Trainer();
             trainer.hireTrainer(cmd);
-            gesRepository.save(trainer, uuid.v4(), {continuationId:continuationId});
+            gesRepository.save(trainer, {continuationId});
         }
     }
 };

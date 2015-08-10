@@ -31,7 +31,6 @@ module.exports = function(gesEventHandlerBase,
                 contact:{firstName:'Raif',lastName:'Harik',emailAddress:'reharik@gmail.com', phone:'666.666.6666', secondPhone:'777.777.7777' },
                 address:{address1:'1706 willow st', address2:'b', city:'Austin', state:'TX', zipCode:'78702'}
                 ,dob:new Date()});
-            console.log(gesRepository.toString());
             gesRepository.save(trainer);
         }
 
