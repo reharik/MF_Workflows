@@ -8,7 +8,7 @@ module.exports = function(gesDispatcher, commandHandlers, logger){
         setTimeout(function(){
             logger.debug('instantiating dispatcher');
             var dispatcher =  new gesDispatcher({
-            targetType:'command',
+                targetStreamType:'command',
             handlers:commandHandlers.map(x=>new x())
         });
 
