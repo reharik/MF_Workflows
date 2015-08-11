@@ -26,15 +26,19 @@ module.exports = function(gesEventHandlerBase,
         }
 
         hireTrainer() {
+            logger.info('calling hiretrainer');
             var trainer = new Trainer();
             trainer.hireTrainer({credentials:{userName:'admin',password:'123456'},
                 contact:{firstName:'Raif',lastName:'Harik',emailAddress:'reharik@gmail.com', phone:'666.666.6666', secondPhone:'777.777.7777' },
                 address:{address1:'1706 willow st', address2:'b', city:'Austin', state:'TX', zipCode:'78702'}
                 ,dob:new Date()});
+            logger.info('saving trainer');
+            logger.trace(trainer);
             gesRepository.save(trainer);
         }
 
         addStates(){
+            logger.info('calling addstates');
             var script =
                 "begin; "+
                 "insert into states (id, document) values ('"+uuid.v4()+"', '{\"Code\":\"AK\", \"Name\":\"Alaska\"}' );" +
