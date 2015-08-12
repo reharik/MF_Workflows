@@ -7,11 +7,12 @@ MAINTAINER Raif Harik <reharik@gmail.com>
 WORKDIR /opt/app/current
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+COPY /app /opt/app/current
 
 ADD /app/package.json /opt/app/current/package.json
 ADD /app/.npmrc /opt/app/current/.npmrc
 RUN  npm install
-
+RUN npm install -g nodemon
 
 # Entrypoint to docker shell
 ENTRYPOINT ["docker-shell"]
@@ -24,5 +25,4 @@ CMD ["-r"]
 ADD ./docker-shell.sh /usr/bin/docker-shell
 RUN chmod +x /usr/bin/docker-shell
 
-COPY /app /opt/app/current
 

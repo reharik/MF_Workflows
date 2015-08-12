@@ -2,7 +2,7 @@
   "name": "MF_Workflows",
   "version": "0.0.1",
   "scripts": {
-    "start": "babel-node --harmony index.js --stage 0",
+    "start": "nodemon --exec babel-node --harmony index.js --stage 0",
     "test": "mocha --opts integrationTests/mocha.opts integrationTests",
     "intTestSpecific": "mocha --opts integrationTests/mocha.opts "
   },
