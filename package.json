@@ -18,7 +18,9 @@
     "pg-bluebird": "^1.0.8",
     "rx": "^2.5.3",
     "uuid": "^2.0.1",
-    "yowl": "^1.0.29"
+    "yowl": "^1.0.29",
+    "domain":"github",
+    "core":"github"
   },
   "devDependencies": {
     "babel": "^5.5.6",

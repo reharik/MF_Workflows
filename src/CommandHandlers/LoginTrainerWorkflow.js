@@ -2,8 +2,8 @@
  * Created by parallels on 7/16/15.
  */
 
-module.exports = function(gesEventHandlerBase, gesRepository, Trainer, logger) {
-    return class LoginTrainerWorkflow extends gesEventHandlerBase {
+module.exports = function(core, domain, logger) {
+    return class LoginTrainerWorkflow extends core.gesEventHandlerBase {
         constructor() {
             super();
             this.handlesEvents = ['loginTrainer'];
@@ -13,9 +13,9 @@ module.exports = function(gesEventHandlerBase, gesRepository, Trainer, logger) {
 
         loginTrainer(vnt) {
             this.createNotification(vnt);
-            var trainer = gesRepository.getById(Trainer, vnt.Id);
+            var trainer = core.gesRepository.getById(domain.Trainer, vnt.Id);
             trainer.loginTrainer(vnt);
-            gesRepository.save(trainer, {continuationId});
+            core.gesRepository.save(trainer, {continuationId});
         }
     }
 };

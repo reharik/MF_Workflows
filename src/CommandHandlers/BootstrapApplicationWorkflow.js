@@ -2,17 +2,14 @@
  * Created by parallels on 7/16/15.
  */
 
-module.exports = function(gesEventHandlerBase,
-                          gesRepository,
-                          gesclient,
-                          Trainer,
+module.exports = function(core,
+                          domain,
                           pgbluebird,
-                          readModelRepository,
                           fs,
                           uuid,
                           config,
                           logger) {
-    return class BootstrapApplicationWorkflow extends gesEventHandlerBase {
+    return class BootstrapApplicationWorkflow extends core.gesEventHandlerBase {
         constructor() {
             super();
             this.handlesEvents = ['bootstrapApplication'];
@@ -27,14 +24,14 @@ module.exports = function(gesEventHandlerBase,
 
         hireTrainer() {
             logger.info('calling hiretrainer');
-            var trainer = new Trainer();
+            var trainer = new domain.Trainer();
             trainer.hireTrainer({credentials:{userName:'admin',password:'123456'},
                 contact:{firstName:'Raif',lastName:'Harik',emailAddress:'reharik@gmail.com', phone:'666.666.6666', secondPhone:'777.777.7777' },
                 address:{address1:'1706 willow st', address2:'b', city:'Austin', state:'TX', zipCode:'78702'}
                 ,dob:new Date()});
             logger.info('saving trainer');
             logger.trace(trainer);
-            gesRepository.save(trainer);
+            core.gesRepository.save(trainer);
         }
 
         addStates(){

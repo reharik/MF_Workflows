@@ -1,8 +1,8 @@
 /**
  * Created by parallels on 7/16/15.
  */
-module.exports = function(gesEventHandlerBase, gesRepository, Trainer, logger) {
-    return class HireTrainerWorkflow extends gesEventHandlerBase {
+module.exports = function(core, domain, logger) {
+    return class HireTrainerWorkflow extends core.gesEventHandlerBase {
         constructor() {
             super();
             this.handlesEvents = ['hireTrainer'];
@@ -12,9 +12,9 @@ module.exports = function(gesEventHandlerBase, gesRepository, Trainer, logger) {
 
         hireTrainer(cmd) {
             this.createNotification(cmd);
-            var trainer = new Trainer();
+            var trainer = new domain.Trainer();
             trainer.hireTrainer(cmd);
-            gesRepository.save(trainer, {continuationId});
+            core.gesRepository.save(trainer, {continuationId});
         }
     }
 };
