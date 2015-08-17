@@ -2,8 +2,10 @@
  * Created by parallels on 7/16/15.
  */
 
-module.exports = function(core, domain, logger) {
-    return class LoginTrainerWorkflow extends core.gesEventHandlerBase {
+var domain = require('domain');
+
+module.exports = function(eventHandlerBase, eventRepository, logger) {
+    return class LoginTrainerWorkflow extends eventHandlerBase {
         constructor() {
             super();
             this.handlesEvents = ['loginTrainer'];
@@ -13,9 +15,9 @@ module.exports = function(core, domain, logger) {
 
         loginTrainer(vnt) {
             this.createNotification(vnt);
-            var trainer = core.gesRepository.getById(domain.Trainer, vnt.Id);
+            var trainer = eventRepository.getById(domain.Trainer, vnt.Id);
             trainer.loginTrainer(vnt);
-            core.gesRepository.save(trainer, {continuationId});
+            eventRepository.save(trainer, {continuationId});
         }
     }
 };

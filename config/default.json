@@ -8,7 +8,7 @@
   "postgres":{
     "connectionString":"postgres://postgres:password@postgres/",
     "postgres":"postgres",
-    "methodFitness":"MethodFitness"
+    "database":"MethodFitness"
   },
   "deploy":{
     "output":{
