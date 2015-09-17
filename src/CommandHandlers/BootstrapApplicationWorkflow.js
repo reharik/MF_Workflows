@@ -5,11 +5,11 @@
 var uuid = require('uuid');
 var domain = require('domain');
 
-module.exports = function(eventHandlerBase,
-                          eventRepository,
-                          readStoreRepository,
+module.exports = function(eventhandlerbase,
+                          eventrepository,
+                          readstorerepository,
                           logger) {
-    return class BootstrapApplicationWorkflow extends eventHandlerBase {
+    return class BootstrapApplicationWorkflow extends eventhandlerbase {
         constructor() {
             super();
             this.handlesEvents = ['bootstrapApplication'];
@@ -31,7 +31,7 @@ module.exports = function(eventHandlerBase,
                 ,dob:new Date()});
             logger.info('saving trainer');
             logger.trace(trainer);
-            eventRepository.save(trainer);
+            eventrepository.save(trainer);
         }
 
         addStates() {
@@ -90,7 +90,7 @@ module.exports = function(eventHandlerBase,
                 "insert into states (id, document) values ('" + uuid.v4() + "', '{\"Code\":\"WY\", \"Name\":\"Wyoming\"}' );" +
                 "commit;";
 
-            readStoreRepository.query(script);
+            readstorerepository.query(script);
         }
     }
 };

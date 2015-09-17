@@ -1,10 +1,9 @@
 /**
  * Created by parallels on 7/16/15.
  */
-var domain = require('domain');
 
-module.exports = function(eventHandlerBase, eventRepository, logger) {
-    return class HireTrainerWorkflow extends eventHandlerBase {
+module.exports = function(appdomain, eventhandlerbase, eventrepository, logger) {
+    return class HireTrainerWorkflow extends eventhandlerbase {
         constructor() {
             super();
             this.handlesEvents = ['hireTrainer'];
@@ -14,9 +13,9 @@ module.exports = function(eventHandlerBase, eventRepository, logger) {
 
         hireTrainer(cmd) {
             this.createNotification(cmd);
-            var trainer = new domain.Trainer();
+            var trainer = new appdomain.Trainer();
             trainer.hireTrainer(cmd);
-            eventRepository.save(trainer, {continuationId});
+            eventrepository.save(trainer, {continuationId});
         }
     }
 };

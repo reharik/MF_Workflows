@@ -1,6 +1,4 @@
-/**
- * Created by parallels on 7/24/15.
- */
 require("babel/register")({
-    stage: 1
+    stage: 1,
+    ignore:[ 'uuid.js', 'rx.js', 'lodash', 'moment','ges-client']
 });

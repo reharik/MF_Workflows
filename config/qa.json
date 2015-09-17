@@ -1,5 +1,16 @@
 {
-  "eventstore":{
-    "ip":"172.0.0.1"
-  }
+  "eventstore": {
+    "host"         : "eventstore",
+    "systemUsers"  : {"admin": "admin"},
+    "adminPassword": "changeit"
+  },
+  "postgres"  : {
+    "connectionString": "postgres://postgres:password@postgres/",
+    "postgres"        : "postgres",
+    "database"        : "MethodFitness"
+  },
+  "logger"      : {
+    "moduleName": "WorkFlows"
+  },
+  "eventdispatcher":  {"targetStreamType": "command"}
 }
