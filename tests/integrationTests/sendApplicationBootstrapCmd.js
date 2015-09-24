@@ -15,22 +15,31 @@ describe('appendToStreamPromiseTester', function() {
     var eventdata;
     var uuid;
     var eventstore;
-    var options = {};
+    var options = {
+        dagon:{
+            logger: {
+                moduleName: 'EventHandlerBase'
+                }
+        }};
 
     extend(options, config.get('configs') || {});
 
     var container = require('../../registry')(options);
     before(function(){
-        eventdata = container.getInstanceOf('eventdata');
+        var eventmodels = container.getInstanceOf('eventmodels');
+        eventdata = eventmodels.eventData;
         eventstore = container.getInstanceOf('eventstore');
         uuid = container.getInstanceOf('uuid');
+        mut = container.getInstanceOf('eventdispatcher');
+    console.log('mmmmutttt');
+        console.log(mut)
     });
 
     beforeEach(function(){
     });
 
     context('append to stream', ()=> {
-        it('should resolve with success', async ()=> {
+        it('should resolve with success',  ()=> {
 
                 var setData = {
                     expectedMetastreamVersion: -1
@@ -44,14 +53,18 @@ describe('appendToStreamPromiseTester', function() {
                         , password: eventstore.gesClientHelpers.systemUsers.defaultAdminPassword
                     }
                 };
-            eventstore.gesClientHelpers.setStreamMetadata('$all', setData);
+            setTimeout(async function(){
+                //eventstore.gesClientHelpers.setStreamMetadata('$all', setData, function(){console.log('HHHHEEERRRREEEE')});
 
 
 
             var appendData = { expectedVersion: -2};
-            appendData.events = [new eventdata( 'bootstrapApplication', { data:'bootstrap please' }, {commandTypeName:'bootstrapApplication'})];
-            var result = await mut('commands',appendData);
+            appendData.events = [
+                eventdata( 'bootstrapApplication', { data:'bootstrap please' }, {commandTypeName:'bootstrapApplication'})];
+            await eventstore.appendToStreamPromise('bootstrapApplication',appendData);
+            var result = await mut.startDispatching('commands',appendData);
             result.Status.must.equal('Success');
+            }, 2000);
         })
     });
 });

@@ -8,7 +8,7 @@ RUN mkdir -p $PLUGIN_HOME
 
 ADD ./package.json ./package.json
 
-RUN npm-install-missing
+RUN npm install
 
 WORKDIR $PLUGIN_HOME
 
