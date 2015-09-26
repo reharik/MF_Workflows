@@ -16,11 +16,12 @@ describe('appendToStreamPromiseTester', function() {
     var uuid;
     var eventstore;
     var options = {
-        dagon:{
-            logger: {
-                moduleName: 'EventHandlerBase'
-                }
-        }};
+        //dagon:{
+        //    logger: {
+        //        moduleName: 'EventHandlerBase'
+        //        }
+        //}
+    };
 
     extend(options, config.get('configs') || {});
 

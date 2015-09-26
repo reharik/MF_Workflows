@@ -2,13 +2,12 @@
  * Created by parallels on 7/16/15.
  */
 
-var uuid = require('uuid');
-var domain = require('domain');
-
 module.exports = function(eventhandlerbase,
                           eventrepository,
                           readstorerepository,
-                          logger) {
+                          logger,
+                            uuid,
+                            appdomain) {
     return class BootstrapApplicationWorkflow extends eventhandlerbase {
         constructor() {
             super();
@@ -24,7 +23,7 @@ module.exports = function(eventhandlerbase,
 
         hireTrainer() {
             logger.info('calling hiretrainer');
-            var trainer = new domain.Trainer();
+            var trainer = new appdomain.Trainer();
             trainer.hireTrainer({credentials:{userName:'admin',password:'123456'},
                 contact:{firstName:'Raif',lastName:'Harik',emailAddress:'reharik@gmail.com', phone:'666.666.6666', secondPhone:'777.777.7777' },
                 address:{address1:'1706 willow st', address2:'b', city:'Austin', state:'TX', zipCode:'78702'}
