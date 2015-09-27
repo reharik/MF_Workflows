@@ -12,7 +12,6 @@ module.exports = function(_options) {
         .for('eventmodels').instantiate(i=>i.asFunc())
         .for('eventstore').instantiate(i=>i.asFunc().withParameters({eventstore:options.eventstore}))
             .for('readstorerepository').instantiate(i=>i.asFunc().withParameters({postgres:options.postgres}))
-            .for('eventdispatcher').instantiate(i=>i.asFunc().withParameters({eventdispatcher:options.eventdispatcher,eventstore:options.eventstore}))
             .for('corelogger').renameTo('logger').instantiate(i=>i.asFunc().withParameters(options.logger || {}))
             .for('bluebird').renameTo('Promise')
             .complete());

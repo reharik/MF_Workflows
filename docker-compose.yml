@@ -1,3 +1,5 @@
+#node:
+#  build: ./deploy/node
 plugin:
   build: .
   volumes:
@@ -26,3 +28,4 @@ eventstore:
     - 1113:1113
   volumes_from:
     - datacontainer
+
