@@ -1,4 +1,4 @@
-FROM mf_nodebox:latest
+FROM mf/nodebox:latest
 
 MAINTAINER reharik@gmail.com
 

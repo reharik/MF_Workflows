@@ -1,23 +1,25 @@
 {
-  "env": "dev",
   "configs": {
-    "eventstore": {
-      "host": "eventstore",
-      "systemUsers": {
-        "admin": "admin"
+    "children": {
+      "eventstore": {
+        "host": "eventstore",
+        "systemUsers": {
+          "admin": "admin"
+        },
+        "adminPassword": "changeit"
       },
-      "adminPassword": "changeit"
-    },
-    "postgres": {
-      "connectionString": "postgres://postgres:password@postgres/",
-      "postgres": "postgres",
-      "database": "MethodFitness"
+      "postgres": {
+        "connectionString": "postgres://postgres:password@postgres/",
+        "postgres": "postgres",
+        "database": "MethodFitness"
+      },
+      "eventdispatcher": {
+        "targetStreamType": "command"
+      }
     },
     "logger": {
       "moduleName": "WorkFlows"
     },
-    "eventdispatcher": {
-      "targetStreamType": "command"
-    }
+    "env": "dev"
   }
 }

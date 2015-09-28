@@ -23,19 +23,16 @@ describe('appendToStreamPromiseTester', function() {
         //        }
         //}
     };
-
+    var setData;
     extend(options, config.get('configs') || {});
 
     var container = require('../../registry')(options);
-    before(function(done){
+    before(async function(){
         var eventmodels = container.getInstanceOf('eventmodels');
         eventdata = eventmodels.eventData;
         eventstore = container.getInstanceOf('eventstore');
         uuid = container.getInstanceOf('uuid');
         handlers = container.getArrayOfGroup('CommandHandlers');
-        console.log('handlers');
-        console.log(handlers);
-        console.log(container.whatDoIHave());
         var _mut = container.getInstanceOf('eventdispatcher');
         mut = _mut(options.eventdispatcher);
 
@@ -43,7 +40,7 @@ describe('appendToStreamPromiseTester', function() {
             username: eventstore.gesClientHelpers.systemUsers.admin
             , password: eventstore.gesClientHelpers.systemUsers.defaultAdminPassword
         };
-        var setData = {
+        setData = {
             expectedMetastreamVersion: -1
             , metadata: eventstore.gesClientHelpers.createStreamMetadata({
                 acl: {
@@ -52,17 +49,12 @@ describe('appendToStreamPromiseTester', function() {
             })
             , auth: auth
         };
-        //eventstore.gesClientHelpers.getStreamMetadata('$all', {auth:auth}, function(err,data) {
+        //await eventstore.gesClientHelpers.getStreamMetadata('$all', {auth:auth}, async function(err,data) {
         //    if (err || !data) {
-        //        eventstore.gesClientHelpers.setStreamMetadata('$all', setData, function () {
-        //            console.log('HHHHEEERRRREEEE')
-        //            done();
-        //        });
+        //        await ;
         //    }else{
-        //        done();
         //        console.log('skipped metadata')
         //    }
-        //    done();
         //});
 
     });
@@ -71,15 +63,22 @@ describe('appendToStreamPromiseTester', function() {
     });
 
     context('append to stream', ()=> {
-        it('should resolve with success', async ()=> {
-
-            var appendData = { expectedVersion: -2};
-            appendData.events = [ eventdata( 'bootstrapApplication', { data:'bootstrap please' }, {commandTypeName:'bootstrapApplication'})];
-            await eventstore.appendToStreamPromise('bootstrapApplication',appendData);
-
+        it('s   hould resolve with success', async ()=> {
+            //await eventstore.gesClientHelpers.setStreamMetadata('$all', setData, function () {
+            //    console.log('HHHHEEERRRREEEE')
+            //})
+            //var appendData = { expectedVersion: -2};
+            //appendData.events = [ eventdata( 'bootstrapApplication',
+            //    { data:'bootstrap please' },
+            //    {
+            //        commandTypeName:'bootstrapApplication',
+            //        streamType:'command'
+            //    })];
+            //await eventstore.appendToStreamPromise('bootstrapApplication',appendData);
+            //
             var result = await mut.startDispatching(handlers);
             //result.Status.must.equal('Success');
-        })
+    })
     });
 });
 
