@@ -10,7 +10,6 @@ var config = require('config');
 var extend = require('extend');
 
 describe('appendToStreamPromiseTester', function() {
-    var bootstrap;
     var mut;
     var eventdata;
     var uuid;
@@ -25,7 +24,6 @@ describe('appendToStreamPromiseTester', function() {
     };
     var setData;
     extend(options, config.get('configs') || {});
-
     var container = require('../../registry')(options);
     before(async function(){
         var eventmodels = container.getInstanceOf('eventmodels');
@@ -33,8 +31,7 @@ describe('appendToStreamPromiseTester', function() {
         eventstore = container.getInstanceOf('eventstore');
         uuid = container.getInstanceOf('uuid');
         handlers = container.getArrayOfGroup('CommandHandlers');
-        var _mut = container.getInstanceOf('eventdispatcher');
-        mut = _mut(options.eventdispatcher);
+        mut = container.getInstanceOf('eventdispatcher');
 
         var auth = {
             username: eventstore.gesClientHelpers.systemUsers.admin
@@ -75,7 +72,7 @@ describe('appendToStreamPromiseTester', function() {
             //        streamType:'command'
             //    })];
             //await eventstore.appendToStreamPromise('bootstrapApplication',appendData);
-            //
+
             var result = await mut.startDispatching(handlers);
             //result.Status.must.equal('Success');
     })

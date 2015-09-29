@@ -9,7 +9,7 @@
         "adminPassword": "changeit"
       },
       "postgres": {
-        "connectionString": "postgres://postgres:password@postgres/",
+        "connectionString": "postgres://MethodFitness:password@postgres/",
         "postgres": "postgres",
         "database": "MethodFitness"
       },
