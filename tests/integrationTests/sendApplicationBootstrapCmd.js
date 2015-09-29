@@ -48,8 +48,11 @@ describe('appendToStreamPromiseTester', function() {
         };
         //await eventstore.gesClientHelpers.getStreamMetadata('$all', {auth:auth}, async function(err,data) {
         //    if (err || !data) {
-        //        await ;
-        //    }else{
+        //        console.log('createing metadata')
+        //        await eventstore.gesClientHelpers.setStreamMetadata('$all', setData, function () {
+        //            console.log('HHHHEEERRRREEEE')
+        //        })
+        //    } else {
         //        console.log('skipped metadata')
         //    }
         //});
@@ -60,20 +63,30 @@ describe('appendToStreamPromiseTester', function() {
     });
 
     context('append to stream', ()=> {
-        it('s   hould resolve with success', async ()=> {
-            //await eventstore.gesClientHelpers.setStreamMetadata('$all', setData, function () {
-            //    console.log('HHHHEEERRRREEEE')
-            //})
-            //var appendData = { expectedVersion: -2};
-            //appendData.events = [ eventdata( 'bootstrapApplication',
-            //    { data:'bootstrap please' },
-            //    {
-            //        commandTypeName:'bootstrapApplication',
-            //        streamType:'command'
-            //    })];
-            //await eventstore.appendToStreamPromise('bootstrapApplication',appendData);
+        it('should resolve with success', async ()=> {
 
-            var result = await mut.startDispatching(handlers);
+            await eventstore.gesClientHelpers.setStreamMetadata('$all', setData, async function (error,data) {
+                console.log("error");
+                console.log(error);
+                console.log("data");
+                console.log(data);
+                if(!error){
+                    var appendData = { expectedVersion: -2};
+                    appendData.events = [ eventdata( 'bootstrapApplication',
+                        { data:'bootstrap please' },
+                        {
+                            commandTypeName:'bootstrapApplication',
+                            streamType:'command'
+                        })];
+                    await eventstore.appendToStreamPromise('bootstrapApplication',appendData);
+                }
+                console.log('HHHHEEERRRREEEE')
+            });
+            await setTimeout(async function(){
+
+                var result = await mut.startDispatching(handlers);
+
+            },3000)
             //result.Status.must.equal('Success');
     })
     });

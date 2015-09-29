@@ -19,6 +19,6 @@ ENV EVENTSTORE_WORKER_THREADS 12
 
 WORKDIR /opt/EventStore-OSS-Linux-v3.0.5
 
-CMD ./run-node.sh --http-prefixes=http://*:2113/ --ext-ip=0.0.0.0 --stats-period-sec=300 --db /data/eventstore/db --log /data/eventstore/logs --run-projections=all
+CMD ./run-node.sh --http-prefixes=http://*:2113/ --ext-ip=0.0.0.0 --stats-period-sec=300 --db /data/eventstore/db --log /data/eventstore/logs #--run-projections=all
 
 

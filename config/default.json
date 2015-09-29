@@ -9,9 +9,9 @@
         "adminPassword": "changeit"
       },
       "postgres": {
-        "connectionString": "postgres://MethodFitness:password@postgres/",
+        "connectionString": "postgres://methodfitness:password@postgres/",
         "postgres": "postgres",
-        "database": "MethodFitness"
+        "database": "methodfitness"
       },
       "eventdispatcher": {
         "targetStreamType": "command"
