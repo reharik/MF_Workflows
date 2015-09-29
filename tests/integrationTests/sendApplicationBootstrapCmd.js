@@ -26,6 +26,8 @@ describe('appendToStreamPromiseTester', function() {
     extend(options, config.get('configs') || {});
     var container = require('../../registry')(options);
     before(async function(){
+        console.log(options.postgres.connectionString + options.postgres.database);
+
         var eventmodels = container.getInstanceOf('eventmodels');
         eventdata = eventmodels.eventData;
         eventstore = container.getInstanceOf('eventstore');
