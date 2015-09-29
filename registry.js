@@ -10,6 +10,8 @@ module.exports = function(_options) {
         .requireDirectoryRecursively('./src')
         .groupAllInDirectory('./src/CommandHandlers', 'CommandHandlers')
         .for('eventmodels').instantiate(i=>i.asFunc())
+        .for('appdomain').instantiate(i=>i.asFunc().withParameters(options.children || {}))
+        .for('eventrepository').instantiate(i=>i.asFunc().withParameters(options.children || {}))
         .for('eventstore').instantiate(i=>i.asFunc().withParameters(options.children || {}))
         .for('eventhandlerbase').instantiate(i=>i.asClass())
         .for('readstorerepository').instantiate(i=>i.asFunc().withParameters(options.children || {}))
