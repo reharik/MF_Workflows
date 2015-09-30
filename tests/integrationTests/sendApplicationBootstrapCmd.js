@@ -22,11 +22,13 @@ describe('appendToStreamPromiseTester', function() {
         //        }
         //}
     };
+    var container;
     var setData;
-    extend(options, config.get('configs') || {});
-    var container = require('../../registry')(options);
     before(async function(){
-        console.log(options.postgres.connectionString + options.postgres.database);
+        extend(options, config.get('configs') || {});
+        container = require('../../registry')(options);
+        console.log(options);
+        console.log(options.children.postgres.connectionString + options.children.postgres.database);
 
         var eventmodels = container.getInstanceOf('eventmodels');
         eventdata = eventmodels.eventData;

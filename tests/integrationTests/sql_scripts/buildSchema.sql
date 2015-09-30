@@ -83,3 +83,5 @@ WITH (
 );
 ALTER TABLE "trainerSummary"
   OWNER TO methodfitness;
+
+COMMIT;
