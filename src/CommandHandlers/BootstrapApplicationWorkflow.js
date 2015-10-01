@@ -27,6 +27,7 @@ module.exports = function(eventhandlerbase,
             logger.info('calling buildDbSchema');
             var script = fs.readFileSync('tests/integrationTests/sql_scripts/buildSchema.sql').toString();
             await readstorerepository.query(script);
+            await readstorerepository.query('COMMIT');
         }
 
         hireTrainer() {
