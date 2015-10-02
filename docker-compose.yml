@@ -4,7 +4,7 @@ plugin:
   build: .
   volumes:
     - .:/home/app/current
-  command:  npm run intTest #top -b
+  command:  top -b #npm run intTest #top -b
   links:
     - postgres:postgres
     - eventstore:eventstore

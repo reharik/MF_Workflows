@@ -11,8 +11,8 @@ module.exports = function(_options) {
     var container = require('./registry')(options);
 
     var dispatcher = container.getInstanceOf('eventdispatcher');
-    var instantiatedDispatcher = dispatcher(options.eventdispatcher);
     var handlers = container.getArrayOfGroup('CommandHandlers');
-    instantiatedDispatcher.startDispatching(handlers)
+    dispatcher.startDispatching(handlers);
+    return container;
 };
 

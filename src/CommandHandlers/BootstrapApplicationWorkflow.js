@@ -18,17 +18,17 @@ module.exports = function(eventhandlerbase,
         }
 
         bootstrapApplication(vnt) {
-            this.buildDbSchema();
+            //this.buildDbSchema();
             this.hireTrainer();
             this.addStates();
         }
-
-        async buildDbSchema() {
-            logger.info('calling buildDbSchema');
-            var script = fs.readFileSync('tests/integrationTests/sql_scripts/buildSchema.sql').toString();
-            await readstorerepository.query(script);
-            await readstorerepository.query('COMMIT');
-        }
+        //
+        //async buildDbSchema() {
+        //    logger.info('calling buildDbSchema');
+        //    var script = fs.readFileSync('tests/integrationTests/sql_scripts/buildSchema.sql').toString();
+        //    await readstorerepository.query(script);
+        //    await readstorerepository.query('COMMIT');
+        //}
 
         hireTrainer() {
             logger.info('calling hiretrainer');
