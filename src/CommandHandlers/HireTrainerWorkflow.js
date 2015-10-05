@@ -11,11 +11,14 @@ module.exports = function(appdomain, eventhandlerbase, eventrepository, logger) 
             logger.info('HireTrainerWorkflow started up');
         }
 
-        hireTrainer(cmd) {
-            this.createNotification(cmd);
+        hireTrainer(cmd, continuationId) {
+            logger.info('made it to hireTrainer');
             var trainer = new appdomain.Trainer();
+            logger.info('created new trainer');
             trainer.hireTrainer(cmd);
+            logger.info('called trainer command');
             eventrepository.save(trainer, {continuationId});
+            logger.info('saved new trainer');
         }
     }
 };

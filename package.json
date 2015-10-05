@@ -30,7 +30,7 @@
     "eventrepository": "git+https://github.com/reharik/core_eventrepository.git",
     "eventhandlerbase": "git+https://github.com/reharik/core_eventhandlerbase.git",
     "eventmodels": "git+https://github.com/reharik/core_eventmodels.git",
-    "projections": "git+https://github.com/reharik/mf_projections.git",
+    "eventstore": "git+https://github.com/reharik/core_eventstore.git",
     "extend": "^3.0.0",
     "pg-bluebird": "^1.0.8",
     "readstorerepository": "git+https://github.com/reharik/core_readStoreRepository.git",
