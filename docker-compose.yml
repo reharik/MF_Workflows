@@ -1,6 +1,6 @@
 #node:
 #  build: ./deploy/node
-plugin:
+workflows:
   build: .
   volumes:
     - .:/home/app/current
