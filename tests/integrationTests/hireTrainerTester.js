@@ -56,7 +56,7 @@ describe('hireTrainerTester', function() {
                     streamType: 'command',
                     continuationId:uuid.v4()
                 })];
-            //await eventstore.appendToStreamPromise('hireTrainer', appendData);
+            await eventstore.appendToStreamPromise('hireTrainer', appendData);
 
             var result = await eventdispatcher.startDispatching(handlers);
         })

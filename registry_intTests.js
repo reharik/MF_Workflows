@@ -13,6 +13,7 @@ module.exports = function(_options) {
             .groupAllInDirectory('./src/CommandHandlers', 'CommandHandlers')
             .for('eventmodels').instantiate(i=>i.asFunc())
             .for('eventstore').instantiate(i=>i.asFunc().withParameters(options.children || {}))
+            .for('appdomain').instantiate(i=>i.asFunc().withParameters(options.children || {}))
             .for('eventhandlerbase').instantiate(i=>i.asFunc().withParameters(options.children || {}))
             .for('eventdispatcher').instantiate(i=>i.asFunc().withParameters(options.children || {}))
             .for('eventrepository').instantiate(i=>i.asFunc().withParameters(options.children || {}))
