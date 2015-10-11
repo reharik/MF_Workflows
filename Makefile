@@ -13,10 +13,10 @@ install:
 	npm install
 
 docker-build:
-	docker build -t $(NAME) -f docker/Dockerfile .
+	docker build -t $(NAME) .
 
 run:	#docker-build
-	docker-compose -f docker/docker-compose.yml run --rm workflows
+	docker-compose run --rm workflows
 
 jenkins-cover:
 	./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --recursive test -R spec
