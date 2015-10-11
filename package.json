@@ -4,10 +4,10 @@
   "private": false,
   "description": "mf_workflows",
   "homepage": "https://github.com/reharik/mf_workflows#readme",
-  "main": "index.js",
+  "main": "app/index.js",
   "scripts": {
-    "test": "mocha --require ./babelhook --opts ./tests/mocha.opts ./tests/unitTests/*.js",
-    "intTest": "mocha --require ./babelhook --opts ./tests/mocha.opts ./tests/integrationTests/*.js"
+    "test": "mocha --require ./app/babelhook --opts ./app/tests/mocha.opts ./app/tests/unitTests/*.js",
+    "intTest": "mocha --require ./app/tests/babelhook --opts ./app/tests/mocha.opts ./app/tests/integrationTests/*.js"
   },
   "bugs": {
     "url": "https://github.com/reharik/mf_workflows/issues"
@@ -25,7 +25,7 @@
     "bluebird": "^2.9.33",
     "config": "^1.14.0",
     "corelogger": "git+https://github.com/reharik/core_logger.git#master",
-    "dagon": "git+https://github.com/reharik/dagon.git",
+    "dagon": "git+https://github.com/reharik/dagon.git#local",
     "eventdispatcher": "git+https://github.com/reharik/core_eventdispatcher.git",
     "eventrepository": "git+https://github.com/reharik/core_eventrepository.git",
     "eventhandlerbase": "git+https://github.com/reharik/core_eventhandlerbase.git",
@@ -39,6 +39,7 @@
     "babel": "^5.8.23",
     "chai": "^3.3.0",
     "del": "^1.2.0",
+    "gulp-babel": "^5.2.1",
     "gulp": "^3.9.0",
     "mocha": "^2.2.5",
     "mochawait": "^2.0.1",

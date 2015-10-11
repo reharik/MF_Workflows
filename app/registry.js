@@ -2,15 +2,16 @@
  * Created by parallels on 9/3/15.
  */
 var dagon = require('dagon');
+var path = require('path');
 
 module.exports = function(_options) {
     var options = _options || {};
     var container = dagon(options.dagon);
     var result;
     try {
-        result = new container(x=> x.pathToRoot(__dirname)
-            .requireDirectoryRecursively('./src')
-            .groupAllInDirectory('./src/CommandHandlers', 'CommandHandlers')
+        result = new container(x=> x.pathToRoot(path.join(__dirname, '..'))
+            .requireDirectoryRecursively('./app/src')
+            .groupAllInDirectory('./app/src/CommandHandlers', 'CommandHandlers')
             .for('eventrepository').instantiate(i=>i.asFunc().withParameters(options.children || {}))
             .for('appdomain').instantiate(i=>i.asFunc().withParameters(options.children || {}))
             .for('eventhandlerbase').instantiate(i=>i.asFunc().withParameters(options.children || {}))
