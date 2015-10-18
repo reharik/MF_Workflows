@@ -14,5 +14,5 @@ module.exports = function(_options) {
     var handlers = container.getArrayOfGroup('CommandHandlers');
     dispatcher.startDispatching(handlers);
     return container;
-};
+}();
 
