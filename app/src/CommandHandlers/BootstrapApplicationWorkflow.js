@@ -1,6 +1,7 @@
 /**
  * Created by parallels on 7/16/15.
  */
+"use strict";
 
 module.exports = function(eventhandlerbase,
                           //eventrepository,

@@ -1,6 +1,7 @@
 /**
  * Created by rharik on 7/13/15.
  */
+"use strict";
 
 var extend = require('extend');
 var config = require('config');
