@@ -18,7 +18,7 @@ module.exports = function(_options) {
             .for('appdomain').instantiate(i=>i.asFunc().withParameters(options.children || {}))
             .for('eventhandlerbase').instantiate(i=>i.asFunc().withParameters(options.children || {}))
             .for('eventdispatcher').instantiate(i=>i.asFunc().withParameters(options.children || {}))
-            .for('readstorerepository').instantiate(i=>i.asFunc().withParameters(options.children || {}))
+            //.for('readstorerepository').instantiate(i=>i.asFunc().withParameters(options.children || {}))
             .for('corelogger').renameTo('logger').instantiate(i=>i.asFunc().withParameters(options.logger || {}))
             .for('bluebird').renameTo('Promise')
             .complete());

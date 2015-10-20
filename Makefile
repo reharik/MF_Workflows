@@ -13,10 +13,10 @@ install:
 	npm install
 
 docker-build:
-	docker build -t $(NAME) -f Dockerfile .
+	docker-compose build
 
 run:	docker-build
-	docker-compose -f docker-compose.yml run --rm workflows
+	docker-compose up
 
 build:
 	docker-compose build

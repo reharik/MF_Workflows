@@ -14,6 +14,5 @@ module.exports = function(_options) {
     var dispatcher = container.getInstanceOf('eventdispatcher');
     var handlers = container.getArrayOfGroup('CommandHandlers');
     dispatcher.startDispatching(handlers);
-    return container;
 }();
 
