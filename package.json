@@ -27,13 +27,10 @@
     "config": "^1.14.0",
     "corelogger": "git+https://github.com/reharik/core_logger.git#master",
     "dagon": "git+https://github.com/reharik/dagon.git#local",
-    "eventdispatcher": "git+https://github.com/reharik/core_eventdispatcher.git",
-    "eventrepository": "git+https://github.com/reharik/core_eventrepository.git",
-    "eventhandlerbase": "git+https://github.com/reharik/core_eventhandlerbase.git",
-    "eventmodels": "git+https://github.com/reharik/core_eventmodels.git",
-    "eventstore": "git+https://github.com/reharik/core_eventstore.git",
     "extend": "^3.0.0",
     "pg-bluebird": "^1.0.8",
+    "ramda": "^0.18.0",
+    "ramda-fantasy": "^0.4.1",
     "uuid": "^2.0.1"
   },
   "devDependencies": {

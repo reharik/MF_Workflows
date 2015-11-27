@@ -12,10 +12,17 @@ module.exports = function(appdomain, eventhandlerbase, eventrepository, logger) 
             logger.info('LoginTrainerWorkflow started up');
         }
 
-        loginTrainer(vnt) {
-            this.createNotification(vnt);
-            var trainer = eventrepository.getById(appdomain.Trainer, vnt.Id);
-            trainer.loginTrainer(vnt);
+        loginTrainer(event) {
+        var trainer = R.compose(
+            eventrepository.getById(appdomain.Trainer),
+            fh.safeProp('Id'),
+            fh.safeProp('data'));
+
+
+            R.Identity(event).map(trainer.loginTrainer)
+
+
+            trainer.loginTrainer(event);
             eventrepository.save(trainer, {continuationId});
         }
     }

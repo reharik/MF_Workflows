@@ -5,25 +5,16 @@
 
 module.exports = function(appdomain, eventhandlerbase, eventrepository, logger) {
     return {
-        handleEvent  : function (vent) {
-            var state = {
-                handlers,
-                vent,
-                eventHandlerName: 'HireTrainerWorkflow'
-            };
-            return eventHandlerBase.handleEvent(state);
+        handleEvent: function (event) {
+            return eventHandlerBase.handleEvent(event, 'HireTrainerWorkflow', handlers[event.eventName]);
         },
         handlers     : {
-            hireTrainer: function (cmd, continuationId) {
-                logger.info('made it to hireTrainer');
+            hireTrainer: function (cmd) {
                 var trainer = new appdomain.Trainer();
-                logger.info('created new trainer');
-                trainer.hireTrainer(cmd);
-                logger.info('called trainer command');
-                eventrepository.save(trainer, {continuationId});
-                logger.info('saved new trainer');
+                trainer.hireTrainer(cmd.data);
+                return eventrepository.save(trainer, {continuationId: cmd.continuationId});
             }
         },
         handlesEvents: ['hireTrainer']
-    }
+    };
 };
