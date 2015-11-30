@@ -31,6 +31,10 @@
     "pg-bluebird": "^1.0.8",
     "ramda": "^0.18.0",
     "ramda-fantasy": "^0.4.1",
+    "eventstore": "git+https://github.com/reharik/core_eventStore.git",
+    "eventrepository": "git+https://github.com/reharik/core_eventRepository.git",
+    "eventhandlerbase": "git+https://github.com/reharik/core_eventHandlerBase.git#functional",
+    "eventdispatcher": "git+https://github.com/reharik/core_eventDispatcher.git#functional",
     "uuid": "^2.0.1"
   },
   "devDependencies": {

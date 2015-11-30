@@ -14,6 +14,7 @@ module.exports = function(_options) {
         result = new container(x=> x.pathToRoot(path.join(__dirname, '..'))
             .requireDirectoryRecursively('./app/src')
             .groupAllInDirectory('./app/src/CommandHandlers', 'CommandHandlers')
+            .for('eventstore').instantiate(i=>i.asFunc().withParameters(options.children || {}))
             .for('eventrepository').instantiate(i=>i.asFunc().withParameters(options.children || {}))
             .for('appdomain').instantiate(i=>i.asFunc().withParameters(options.children || {}))
             .for('eventhandlerbase').instantiate(i=>i.asFunc().withParameters(options.children || {}))

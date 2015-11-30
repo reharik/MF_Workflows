@@ -34,24 +34,24 @@ describe('gesEventHandlerBase', function() {
         //_fantasy = container.getInstanceOf('_fantasy');
         //R = container.getInstanceOf('R');
         //treis = container.getInstanceOf('treis');
-         _fantasy = require('ramda-fantasy');
-        R = require('ramda');
-        Future = _fantasy.Future;
-        Maybe = _fantasy.Maybe;
-        uuid = require('uuid');
-        JSON = require('JSON');
-
-        event = {
-            data            : {
-                some: 'data'
-            },
-            continuationId  : uuid.v4(),
-            originalPosition: {
-                CommitPosition : 1,
-                PreparePosition: 1
-            },
-            eventName       : 'howardTheDuck'
-        };
+        // _fantasy = require('ramda-fantasy');
+        //R = require('ramda');
+        //Future = _fantasy.Future;
+        //Maybe = _fantasy.Maybe;
+        //uuid = require('uuid');
+        //JSON = require('JSON');
+        //
+        //event = {
+        //    data            : {
+        //        some: 'data'
+        //    },
+        //    continuationId  : uuid.v4(),
+        //    originalPosition: {
+        //        CommitPosition : 1,
+        //        PreparePosition: 1
+        //    },
+        //    eventName       : 'howardTheDuck'
+        //};
 
         //_mut = container.getInstanceOf('handler');
         //mut = _mut(event, 'testHandler', testHandler().targetHandlerFunction)
@@ -61,18 +61,27 @@ describe('gesEventHandlerBase', function() {
         context('when calling with isIdepotence equal to true', function () {
             it('should return the bool',  function () {
 
-                var trainer = Future((rej, ret) => {
-                    ret({
-                        login: function(event) {
-                            return event;
-                        }
-                    })
-                });
+                //var trainer = Future((rej, ret) => {
+                //    ret({
+                //        login: function(event) {
+                //            return event;
+                //        }
+                //    })
+                //});
+                //
+                //var identity = _fantasy.Identity(event);
+                //var vent = identity.ap(trainer)
+                //console.log(vent);
+try{
 
-                var identity = _fantasy.Identity(event);
-                var vent = identity.ap(trainer)
-                console.log(vent);
+    require('../index')
+}catch(ex){
+    var split = ex.stack.split('\n');
 
+split.forEach(x=>{console.log(x);console.log('\n')})
+    console.log({test:split})
+    //console.log(ex.stack);
+}
 
              })
         });
