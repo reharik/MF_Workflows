@@ -7,8 +7,8 @@
   "main": "app/index.js",
   "scripts": {
     "start": "babel-node app/index.js ",
-    "test": "mocha --require ./app/babelhook --opts ./app/tests/mocha.opts ./app/tests/unitTests/*.js",
-    "intTest": "mocha --require ./app/babelhook --opts ./app/tests/mocha.opts ./app/tests/integrationTests/*.js"
+    "test": "mocha --require  --opts ./app/tests/mocha.opts ./app/tests/unitTests/*.js",
+    "intTest": "mocha  ./app/tests/integrationTests/*.js"
   },
   "bugs": {
     "url": "https://github.com/reharik/mf_workflows/issues"
@@ -22,27 +22,28 @@
   "license": "MIT",
   "dependencies": {
     "JSON": "^1.0.0",
-    "appdomain": "git+https://github.com/reharik/mf_domain.git",
+    "appdomain": "git://github.com/reharik/mf_domain.git",
     "bluebird": "^2.9.33",
     "config": "^1.14.0",
-    "corelogger": "git+https://github.com/reharik/core_logger.git#master",
-    "dagon": "git+https://github.com/reharik/dagon.git#local",
+    "corelogger": "git://github.com/reharik/core_logger.git#master",
+    "dagon": "git://github.com/reharik/dagon.git#local",
     "extend": "^3.0.0",
     "pg-bluebird": "^1.0.8",
     "ramda": "^0.18.0",
     "ramda-fantasy": "^0.4.1",
-    "eventstore": "git+https://github.com/reharik/core_eventStore.git",
-    "eventrepository": "git+https://github.com/reharik/core_eventRepository.git",
-    "eventhandlerbase": "git+https://github.com/reharik/core_eventHandlerBase.git#functional",
-    "eventdispatcher": "git+https://github.com/reharik/core_eventDispatcher.git#functional",
+    "eventstore": "git://github.com/reharik/core_eventStore.git",
+    "eventrepository": "git://github.com/reharik/core_eventRepository.git",
+    "eventhandlerbase": "git://github.com/reharik/core_eventHandlerBase.git#functional",
+    "eventdispatcher": "git://github.com/reharik/core_eventDispatcher.git#functional",
     "uuid": "^2.0.1"
   },
   "devDependencies": {
     "babel": "^5.8.23",
+    "babel-register": "^6.2.0",
     "chai": "^3.3.0",
     "del": "^1.2.0",
-    "gulp-babel": "^5.2.1",
     "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
     "mocha": "^2.2.5",
     "mochawait": "^2.0.1",
     "must": "^0.12.0"

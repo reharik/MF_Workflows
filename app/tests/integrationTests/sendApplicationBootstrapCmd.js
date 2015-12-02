@@ -16,28 +16,30 @@ describe('appendToStreamPromiseTester', function() {
     var eventstore;
     var handlers;
     var options = {
-        //dagon:{
-        //    logger: {
-        //        moduleName: 'EventHandlerBase'
-        //        }
-        //}
+        dagon:{
+            logger: {
+                moduleName: 'Workflows'
+                }
+        }
     };
     var container;
     //var setData;
     //var readstorerepository;
 
 
-    before(async function () {
+    before( function () {
         extend(options, config.get('configs') || {});
         container = require('../../registry')(options);
+        console.log('mutxxxxxxxxxxxxxxxxxxxxxxxx');
         //var eventmodels = container.getInstanceOf('eventmodels');
         //eventdata = eventmodels.eventData;
-//console.log(container)
-        eventstore = container.getInstanceOf('eventstore');
-        console.log(eventstore)
         //uuid = container.getInstanceOf('uuid');
-        handlers = container.getArrayOfGroup('CommandHandlers');
         //readstorerepository = container.getInstanceOf('readstorerepository');
+        console.log('mutxxxxxxxxxxxxxxxxxxxxxxxx');
+        console.log(container);
+        console.log('mutxxxxxxxxxxxxxxxxxxxxxxxx');
+        eventstore = container.getInstanceOf('eventstore');
+        handlers = container.getArrayOfGroup('CommandHandlers');
         mut = container.getInstanceOf('eventdispatcher');
         var auth = {
             username: eventstore.gesClientHelpers.systemUsers.admin
@@ -58,10 +60,10 @@ describe('appendToStreamPromiseTester', function() {
     });
 
     context('append to stream', ()=> {
-        it('should resolve with success', async ()=> {
+        it('should resolve with success', ()=> {
             //var script = fs.readFileSync('tests/integrationTests/sql_scripts/buildSchema.sql').toString();
             //await readstorerepository.query(script);
-            await eventstore.gesClientHelpers.setStreamMetadata('$all', setData, async function (error, data) {
+            eventstore.gesClientHelpers.setStreamMetadata('$all', setData, function (error, data) {
             //
             //    if (!error) {
             //        var appendData = {expectedVersion: -2};
