@@ -4,7 +4,7 @@ workflows:
   build: .
   volumes:
     - ./app:/home/current/app
-  command: npm run intTest #npm start #top -b
+  command: npm run intTest #  npm start #top -b
   external_links:
     - mfapi_postgres_1:postgres
     - mfapi_eventstore_1:eventstore

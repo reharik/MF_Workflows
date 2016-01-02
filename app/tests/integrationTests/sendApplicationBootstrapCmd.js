@@ -9,6 +9,7 @@ require('must');
 var config = require('config');
 var extend = require('extend');
 var fs = require('fs');
+
 describe('appendToStreamPromiseTester', function() {
     var mut;
     //var eventdata;
@@ -30,7 +31,6 @@ describe('appendToStreamPromiseTester', function() {
     before( function () {
         extend(options, config.get('configs') || {});
         container = require('../../registry')(options);
-        console.log('mutxxxxxxxxxxxxxxxxxxxxxxxx');
         //var eventmodels = container.getInstanceOf('eventmodels');
         //eventdata = eventmodels.eventData;
         //uuid = container.getInstanceOf('uuid');
@@ -41,29 +41,33 @@ describe('appendToStreamPromiseTester', function() {
         eventstore = container.getInstanceOf('eventstore');
         handlers = container.getArrayOfGroup('CommandHandlers');
         mut = container.getInstanceOf('eventdispatcher');
-        var auth = {
-            username: eventstore.gesClientHelpers.systemUsers.admin
-            , password: eventstore.gesClientHelpers.systemUsers.defaultAdminPassword
-        };
-        setData = {
-            expectedMetastreamVersion: -1
-            , metadata: eventstore.gesClientHelpers.createStreamMetadata({
-                acl: {
-                    readRoles: eventstore.gesClientHelpers.systemRoles.all
-                }
-            })
-            , auth: auth
-        };
+        console.log('mutxxxxxxxxxxxxxxxxxxxxxxxx');
+
+        //var auth = {
+        //    username: eventstore.gesClientHelpers.systemUsers.admin
+        //    , password: eventstore.gesClientHelpers.systemUsers.defaultAdminPassword
+        //};
+        //setData = {
+        //    expectedMetastreamVersion: -1
+        //    , metadata: eventstore.gesClientHelpers.createStreamMetadata({
+        //        acl: {
+        //            readRoles: eventstore.gesClientHelpers.systemRoles.all
+        //        }
+        //    })
+        //    , auth: auth
+        //};
     });
 
     beforeEach(function () {
     });
 
     context('append to stream', ()=> {
-        it('should resolve with success', ()=> {
-            //var script = fs.readFileSync('tests/integrationTests/sql_scripts/buildSchema.sql').toString();
+        it('should resolve with success', function() {
+            console.log('xxxxxxxxxxxxxxappendToStreamPromise');
+
+            //done();
             //await readstorerepository.query(script);
-            eventstore.gesClientHelpers.setStreamMetadata('$all', setData, function (error, data) {
+            //eventstore.gesClientHelpers.setStreamMetadata('$all', setData, function (error, data) {
             //
             //    if (!error) {
             //        var appendData = {expectedVersion: -2};
@@ -73,9 +77,12 @@ describe('appendToStreamPromiseTester', function() {
             //                commandTypeName: 'bootstrapApplication',
             //                streamType: 'command'
             //            })];
-            //        await eventstore.appendToStreamPromise('bootstrapApplication', appendData);
+            //var appendToStreamPromise = eventstore.appendToStreamPromise('bootstrapApplication', appendData);
+            //console.log('xxxxxxxxxxxxxxappendToStreamPromise')
+            //console.log(appendToStreamPromise)
+            //appendToStreamPromise.then(x=>{console.log('failxxxxxxxxxxxxxxxxxxxx'); done()}, x=>{console.log('successxxxxxxxxxxx'); done()});
             //    }
-            });
+            //});
             //await setTimeout(async function () {
 
                 //var result = await mut.startDispatching(handlers);

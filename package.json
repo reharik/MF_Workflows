@@ -7,7 +7,7 @@
   "main": "app/index.js",
   "scripts": {
     "start": "babel-node app/index.js ",
-    "test": "mocha --require  --opts ./app/tests/mocha.opts ./app/tests/unitTests/*.js",
+    "test": "mocha --opts ./app/tests/mocha.opts ./app/tests/unitTests/*.js",
     "intTest": "mocha  ./app/tests/integrationTests/*.js"
   },
   "bugs": {
@@ -26,7 +26,7 @@
     "bluebird": "^2.9.33",
     "config": "^1.14.0",
     "corelogger": "git://github.com/reharik/core_logger.git#master",
-    "dagon": "git://github.com/reharik/dagon.git#local",
+    "dagon": "git://github.com/reharik/dagon.git#newVersion",
     "extend": "^3.0.0",
     "pg-bluebird": "^1.0.8",
     "ramda": "^0.18.0",

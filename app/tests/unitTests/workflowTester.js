@@ -2,7 +2,8 @@
  * Created by rharik on 11/26/15.
  */
 var demand = require('must');
-
+var dagon = require('dagon');
+var localReg = require('../../registry');
 describe('gesEventHandlerBase', function() {
     var mut;
     var _mut;
@@ -25,8 +26,9 @@ describe('gesEventHandlerBase', function() {
     var treis;
     var R;
     var continuationId;
-
-    //var container = require('../../registry_test')(options);
+    var registry;
+    var container;
+    var _dagon;
 
     beforeEach(function(){
         //testHandler = container.getInstanceOf('TestEventHandler');
@@ -55,11 +57,16 @@ describe('gesEventHandlerBase', function() {
 
         //_mut = container.getInstanceOf('handler');
         //mut = _mut(event, 'testHandler', testHandler().targetHandlerFunction)
+
+        container = localReg(options.dagon || {});
+
     });
 
     describe('#CHECKIFPROCESSED', function() {
         context('when calling with isIdepotence equal to true', function () {
             it('should return the bool',  function () {
+
+                console.log(container.whatDoIHave());
 
                 //var trainer = Future((rej, ret) => {
                 //    ret({
@@ -72,16 +79,17 @@ describe('gesEventHandlerBase', function() {
                 //var identity = _fantasy.Identity(event);
                 //var vent = identity.ap(trainer)
                 //console.log(vent);
-try{
-
-    require('../index')
-}catch(ex){
-    var split = ex.stack.split('\n');
-
-split.forEach(x=>{console.log(x);console.log('\n')})
-    console.log({test:split})
-    //console.log(ex.stack);
-}
+//try{
+//
+//    require('../../index');
+//
+//}catch(ex){
+//    var split = ex.stack.split('\n');
+//
+//split.forEach(x=>{console.log(x);console.log('\n')})
+//    console.log({test:split})
+//    //console.log(ex.stack);
+//}
 
              })
         });
