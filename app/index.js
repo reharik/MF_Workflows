@@ -13,6 +13,9 @@ module.exports = function(_options) {
     //
     var dispatcher = container.getInstanceOf('eventdispatcher');
     var handlers = container.getArrayOfGroup('CommandHandlers');
+    console.log('==========handlers=========');
+    console.log(handlers);
+    console.log('==========ENDhandlers=========');
     dispatcher.startDispatching(handlers);
 
     //throw(Error('error'))
