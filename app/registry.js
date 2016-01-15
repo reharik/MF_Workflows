@@ -12,24 +12,26 @@ module.exports = function(_options) {
     var result;
     try {
         result = container(
-                x=> x.pathToRoot(path.join(__dirname, '..'))
-                    .requireDirectoryRecursively('./app/src')
-                    .groupAllInDirectory('./app/src/CommandHandlers', 'CommandHandlers')
-                    .requiredModuleRegistires(['eventstore','eventrepository','eventhandlerbase','eventdispatcher'])
-                    .for('corelogger').renameTo('logger')
-                    .for('bluebird').renameTo('Promise')
-                    .for('ramda').renameTo('R')
-                    .for('ramdafantasy').renameTo('_fantasy')
-                    .complete(),
-                x=> x.instantiate('eventstoreplugin').asFunc().withParameters(options.eventstore || {})
-                    .instantiate('eventrepository').asFunc().withParameters(options.children || {})
-                    .instantiate('appdomain').asFunc().withParameters(options.children || {})
-                    .instantiate('eventhandlerbase').asFunc().withParameters(options.children || {})
-                    .instantiate('eventdispatcher').asFunc().withParameters(options.children || {})
-                    .instantiate('readstorerepository').asFunc().withParameters(options.children || {})
-                    .instantiate('logger').asFunc().withParameters(options.logger || {})
-                    .complete()
-        );
+                x=> x.pathToRoot(path.join(__dirname, '/../'))
+                .requireDirectoryRecursively('./app/src')
+                .groupAllInDirectory('./app/src/CommandHandlers', 'CommandHandlers')
+                .requiredModuleRegistires(['eventstore', 'eventrepository', 'eventhandlerbase', 'eventdispatcher'])
+                .for('corelogger').renameTo('logger')
+                .for('ramda').renameTo('R')
+                .for('ramdafantasy').renameTo('_fantasy')
+                .for('bluebird').renameTo('Promise')
+                .for('eventstore').replaceWith('eventstorePlugin')
+                .for('readstorerepository').replaceWith('rsRepositoryPlugin')
+                .for('eventmodels').replaceWith('eventModelsPlugin')
+                .for('eventdispatcher').replaceWith('eventDispatcherPlugin')
+                .complete(),
+                x=>x.instantiate('eventstore').asFunc().withParameters(options.children || {})
+                .instantiate('gesConnection').asFunc().withParameters(options.children || {})
+                .instantiate('eventdispatcher').asFunc().withParameters(options.children || {})
+                .instantiate('readstorerepository').asFunc().withParameters(options.children || {})
+                .instantiate('logger').asFunc().withParameters(options.logger || {})
+                .instantiate('eventhandlerbase').asFunc().withParameters(options.children || {})
+                .complete());
     } catch (ex) {
         console.log(ex);
         console.log(ex.stack);

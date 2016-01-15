@@ -11,9 +11,9 @@ module.exports = function(_options) {
     extend(options, config.get('configs') || {}, _options || {});
     var container = require('./registry')(options);
     //
-    //var dispatcher = container.getInstanceOf('eventdispatcher');
-    //var handlers = container.getArrayOfGroup('CommandHandlers');
-    //dispatcher.startDispatching(handlers);
+    var dispatcher = container.getInstanceOf('eventdispatcher');
+    var handlers = container.getArrayOfGroup('CommandHandlers');
+    dispatcher.startDispatching(handlers);
 
     //throw(Error('error'))
 }();

@@ -6,7 +6,7 @@
   "homepage": "https://github.com/reharik/mf_workflows#readme",
   "main": "app/index.js",
   "scripts": {
-    "start": "babel-node app/index.js ",
+    "start": "node app/index.js",
     "test": "mocha --opts ./app/tests/mocha.opts ./app/tests/unitTests/*.js",
     "intTest": "mocha  ./app/tests/integrationTests/*.js"
   },
@@ -38,8 +38,6 @@
     "uuid": "^2.0.1"
   },
   "devDependencies": {
-    "babel": "^5.8.23",
-    "babel-register": "^6.2.0",
     "chai": "^3.3.0",
     "del": "^1.2.0",
     "gulp": "^3.9.0",
