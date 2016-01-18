@@ -13,10 +13,12 @@ module.exports = function(eventhandlerbase,
 
     return {
         handleEvent  : function(event) {
+            console.log(event);
             return eventHandlerBase.handleEvent(event, 'BootstrapApplicationWorkflow', handlers[event.eventName]);
         },
         handlers     : {
             loginTrainer(vnt) {
+                console.log(vnt);
                 this.createNotification(vnt);
                 var trainer = eventrepository.getById(appdomain.Trainer, vnt.Id);
                 trainer.loginTrainer(vnt);

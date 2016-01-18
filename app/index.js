@@ -10,14 +10,9 @@ module.exports = function(_options) {
     var options = {};
     extend(options, config.get('configs') || {}, _options || {});
     var container = require('./registry')(options);
-    //
-    var dispatcher = container.getInstanceOf('eventdispatcher');
-    var handlers = container.getArrayOfGroup('CommandHandlers');
-    console.log('==========handlers=========');
-    console.log(handlers);
-    console.log('==========ENDhandlers=========');
-    dispatcher.startDispatching(handlers);
-
+    var dispatch = container.getInstanceOf('dispatch');
+    setTimeout(dispatch, 1000);
     //throw(Error('error'))
+
 }();
 

@@ -27,7 +27,6 @@ module.exports = function(_options) {
                 .complete(),
                 x=>x.instantiate('eventstore').asFunc().withParameters(options.children || {})
                 .instantiate('gesConnection').asFunc().withParameters(options.children || {})
-                .instantiate('eventdispatcher').asFunc().withParameters(options.children || {})
                 .instantiate('readstorerepository').asFunc().withParameters(options.children || {})
                 .instantiate('logger').asFunc().withParameters(options.logger || {})
                 .instantiate('eventhandlerbase').asFunc().withParameters(options.children || {})
