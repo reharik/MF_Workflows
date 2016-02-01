@@ -4,7 +4,7 @@
 "use strict";
 
 module.exports = function(eventhandlerbase,
-                          //eventrepository,
+                          eventrepository,
                           //readstorerepository,
                           logger,
                           fs,
@@ -12,9 +12,10 @@ module.exports = function(eventhandlerbase,
                             appdomain) {
 
     return {
+        handlesEvents: ['bootstrapApplication'],
         handleEvent  : function(event) {
-            console.log(event);
-            return eventHandlerBase.handleEvent(event, 'BootstrapApplicationWorkflow', handlers[event.eventName]);
+            var handlerBase = eventhandlerbase(event, 'bootstrapApplication', this.handlers[event.eventName]);
+            return handlerBase.application(event);
         },
         handlers     : {
             loginTrainer(vnt) {
@@ -23,35 +24,45 @@ module.exports = function(eventhandlerbase,
                 var trainer = eventrepository.getById(appdomain.Trainer, vnt.Id);
                 trainer.loginTrainer(vnt);
                 eventrepository.save(trainer, {continuationId});
+            },
+            bootstrapApplication(vnt) {
+                console.log('inside bootstrapper handler');
+                console.log(vnt);
+                //hireTrainer();
+                return 'success';
             }
         },
-        handlesEvents: ['bootstrapApplication']
+
+        hireTrainer() {
+            logger.info('calling hiretrainer');
+            var trainer = new appdomain.Trainer();
+            trainer.hireTrainer({
+                credentials: {
+                    userName: 'admin',
+                    password: '123456'
+                },
+                contact    : {
+                    firstName   : 'Raif',
+                    lastName    : 'Harik',
+                    emailAddress: 'reharik@gmail.com',
+                    phone       : '666.666.6666',
+                    secondPhone : '777.777.7777'
+                },
+                address    : {
+                    address1: '1706 willow st',
+                    address2: 'b',
+                    city    : 'Austin',
+                    state   : 'TX',
+                    zipCode : '78702'
+                }
+                ,
+                dob        : new Date()
+            });
+            logger.info('saving trainer');
+            logger.trace(trainer);
+            eventrepository.save(trainer);
+        }
     };
-
-    //bootstrapApplication(vnt) {
-    //this.buildDbSchema();
-    //this.hireTrainer();
-    //this.addStates();
-    //}
-    //
-    //async buildDbSchema() {
-    //    logger.info('calling buildDbSchema');
-    //    var script = fs.readFileSync('tests/integrationTests/sql_scripts/buildSchema.sql').toString();
-    //    await readstorerepository.query(script);
-    //    await readstorerepository.query('COMMIT');
-    //}
-
-    //hireTrainer() {
-    //    logger.info('calling hiretrainer');
-    //    var trainer = new appdomain.Trainer();
-    //    trainer.hireTrainer({credentials:{userName:'admin',password:'123456'},
-    //        contact:{firstName:'Raif',lastName:'Harik',emailAddress:'reharik@gmail.com', phone:'666.666.6666', secondPhone:'777.777.7777' },
-    //        address:{address1:'1706 willow st', address2:'b', city:'Austin', state:'TX', zipCode:'78702'}
-    //        ,dob:new Date()});
-    //    logger.info('saving trainer');
-    //    logger.trace(trainer);
-    //    eventrepository.save(trainer);
-    //}
 
     //addStates() {
     //    logger.info('calling addstates');

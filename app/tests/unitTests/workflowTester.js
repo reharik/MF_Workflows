@@ -1,69 +1,81 @@
 /**
  * Created by rharik on 11/26/15.
  */
-var demand = require('must');
-var dagon = require('dagon');
-var localReg = require('../../registry');
-describe('gesEventHandlerBase', function() {
-    var mut;
-    var _mut;
-    var testHandler;
-    var eventmodels;
-    var uuid ;
-    var JSON;
-    var options = {
-        logger: {
-            moduleName: 'EventHandlerBase'
+
+
+var should = require('chai').should();
+var expect = require('chai').expect;
+
+var container = require('../../registry_test')({});
+
+var _fantasy = container.getInstanceOf('_fantasy');
+var Maybe = _fantasy.Maybe;
+var Right = _fantasy.Either.Right;
+var Left = _fantasy.Either.Left;
+var uuid = container.getInstanceOf('uuid');
+var treis = container.getInstanceOf('treis');
+var _mut = container.getInstanceOf('serveToHandlers');
+var mut;
+var eventData;
+var continuationId = uuid.v4();
+var sysEvent;
+var matchingHandler;
+var handlers;
+var _testHandler = container.getInstanceOf('TestEventHandler');
+var _testHandler2 = container.getInstanceOf('TestEventHandler2');
+var testHandler;
+var testHandler2;
+var bootstrapper;
+
+describe('MF_WORKFLOWS', function() {
+    before(function() {
+    });
+
+    beforeEach(function() {
+        sysEvent = {
+            Event           : { EventType: '$event' }
+        };
+        eventData = {
+            eventName       : 'someEventNotificationOn',
+            continuationId  : '6d4f1122-b866-409f-98d8-10fb6451de3c',
+            originalPosition: 'the originalPosition',
+            data            : {some: 'data'}
+        };
+
+        bootstrapper = {
+            eventName       : 'bootstrapApplication',
+            continuationId  : '',
+            originalPosition: {
+                Position: {
+                    commitPosition : '19957',
+                    CommitPosition : '19957',
+                    preparePosition: '19957',
+                    PreparePosition: '19957'
+                }
+            },
+            data            : {data: 'bootstrap please'}
+        };
+
+        handlers =[{
+            handlesEvents:['someEventNotificationOn','someOtherCrap']
         },
-        dagon: {}
-    };
-    var event;
-    var _fantasy;
-    var Future;
-    var Maybe;
-    var Left;
-    var Right;
-    var treis;
-    var R;
-    var continuationId;
-    var registry;
-    var container;
-    var _dagon;
+                   {
+                       handlesEvents:['someOtherCrap']
+                   }];
 
-    beforeEach(function(){
-        //testHandler = container.getInstanceOf('TestEventHandler');
-        //eventmodels = container.getInstanceOf('eventmodels');
-        //_fantasy = container.getInstanceOf('_fantasy');
-        //R = container.getInstanceOf('R');
-        //treis = container.getInstanceOf('treis');
-        // _fantasy = require('ramda-fantasy');
-        //R = require('ramda');
-        //Future = _fantasy.Future;
-        //Maybe = _fantasy.Maybe;
-        //uuid = require('uuid');
-        //JSON = require('JSON');
-        //
-        //event = {
-        //    data            : {
-        //        some: 'data'
-        //    },
-        //    continuationId  : uuid.v4(),
-        //    originalPosition: {
-        //        CommitPosition : 1,
-        //        PreparePosition: 1
-        //    },
-        //    eventName       : 'howardTheDuck'
-        //};
+        matchingHandler = {
+            handlesEvents:['someEventNotificationOn','someOtherCrap']
+        };
 
-        //_mut = container.getInstanceOf('handler');
-        //mut = _mut(event, 'testHandler', testHandler().targetHandlerFunction)
-
-        container = localReg(options.dagon || {});
+        testHandler = _testHandler();
+        testHandler2 = _testHandler2();
+        mut = _mut([testHandler,testHandler2]);
 
     });
 
-    describe('#CHECKIFPROCESSED', function() {
-        context('when calling with isIdepotence equal to true', function () {
+
+    describe('#check if handler receives event', function() {
+        context('when passing event', function () {
             it('should return the bool',  function () {
 
                 console.log(container.whatDoIHave());

@@ -14,7 +14,7 @@ module.exports = function(_options) {
         result = container(
                 x=> x.pathToRoot(path.join(__dirname, '/../'))
                 .requireDirectoryRecursively('./app/src')
-                .groupAllInDirectory('./app/src/CommandHandlers', 'CommandHandlers')
+                .groupAllInDirectory('./app/src/CommandHandlers', 'CommandHandlers_array')
                 .requiredModuleRegistires(['eventstore', 'eventrepository', 'eventhandlerbase', 'eventdispatcher'])
                 .for('corelogger').renameTo('logger')
                 .for('ramda').renameTo('R')
@@ -23,13 +23,13 @@ module.exports = function(_options) {
                 .for('eventstore').replaceWith('eventstorePlugin')
                 .for('readstorerepository').replaceWith('rsRepositoryPlugin')
                 .for('eventmodels').replaceWith('eventModelsPlugin')
-                .for('eventdispatcher').replaceWith('eventDispatcherPlugin')
+                    .for('eventdispatcher').replaceWith('eventDispatcherPlugin')
+                    .for('eventhandlerbase').replaceWith('eventHandlerPlugin')
                 .complete(),
                 x=>x.instantiate('eventstore').asFunc().withParameters(options.children || {})
-                .instantiate('gesConnection').asFunc().withParameters(options.children || {})
-                .instantiate('readstorerepository').asFunc().withParameters(options.children || {})
+                    .instantiate('readstorerepository').asFunc().withParameters(options.children || {})
+                    .instantiate('gesConnection').asFunc().withParameters(options.children || {})
                 .instantiate('logger').asFunc().withParameters(options.logger || {})
-                .instantiate('eventhandlerbase').asFunc().withParameters(options.children || {})
                 .complete());
     } catch (ex) {
         console.log(ex);
