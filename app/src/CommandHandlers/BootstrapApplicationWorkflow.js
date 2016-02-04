@@ -11,6 +11,15 @@ module.exports = function(eventhandlerbase,
                             uuid,
                             appdomain) {
 
+
+
+    function BootstrapApplicationWorkflow() {
+        if (!(this instanceof BootstrapApplicationWorkflow)) {
+            return new BootstrapApplicationWorkflow();
+        }
+
+    }
+
     return {
         handlesEvents: ['bootstrapApplication'],
         handleEvent  : function(event) {
