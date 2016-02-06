@@ -17,7 +17,7 @@ module.exports = function(_options) {
                 .for('ramdafantasy').renameTo('_fantasy')
                 .for('bluebird').renameTo('Promise')
                 .for('eventstore').replaceWith('eventStoreMock')
-                .for('eventmodels').replaceWith('eventModelsPlugin')
+                .for('appfuncs').replaceWith('applicationFunctionsPlugin')
                 .complete(),
                 x=>x.instantiate('eventstore').asFunc().withParameters(options.children || {})
                 .instantiate('eventhandlerbase').asFunc().withParameters(options.children || {})

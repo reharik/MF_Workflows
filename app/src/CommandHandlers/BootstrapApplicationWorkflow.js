@@ -17,8 +17,30 @@ module.exports = function(eventhandlerbase,
         if (!(this instanceof BootstrapApplicationWorkflow)) {
             return new BootstrapApplicationWorkflow();
         }
-
     }
+
+
+    BootstrapApplicationWorkflow.prototype.handlesEvents = ['bootstrapApplication'];
+    BootstrapApplicationWorkflow.prototype.handleEvent  = function(event) {
+        var handlerBase = eventhandlerbase(event, 'bootstrapApplication', this.handlers[event.eventName]);
+        return handlerBase.application(event);
+    };
+    BootstrapApplicationWorkflow.prototype.handlers = {
+        loginTrainer(vnt) {
+            console.log(vnt);
+            this.createNotification(vnt);
+            var trainer = eventrepository.getById(appdomain.Trainer, vnt.Id);
+            trainer.loginTrainer(vnt);
+            eventrepository.save(trainer, {continuationId});
+        },
+        bootstrapApplication(vnt) {
+            console.log('inside bootstrapper handler');
+            console.log(vnt);
+            //hireTrainer();
+            return 'success';
+        }
+    };
+
 
     return {
         handlesEvents: ['bootstrapApplication'],
