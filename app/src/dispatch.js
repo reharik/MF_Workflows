@@ -6,6 +6,7 @@
 
 module.exports = function(eventdispatcher, CommandHandlers_array){
     return function(){
-        eventdispatcher(CommandHandlers_array).startDispatching('command');
+
+        eventdispatcher(CommandHandlers_array.map(x=>new x())).startDispatching('command');
     };
 };

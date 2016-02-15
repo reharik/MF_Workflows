@@ -2,7 +2,7 @@ workflows:
   image: workflows/dispatcher
   volumes:
     - ./../app:/home/current/app
-  command: top -b #npm start #top -b #
+  command: npm start #top -b #
   links:
     - postgres
     - eventstore

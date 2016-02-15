@@ -23,8 +23,8 @@ module.exports = function(_options) {
                 .for('eventstore').replaceWith('eventstorePlugin')
                 .for('readstorerepository').replaceWith('rsRepositoryPlugin')
                 .for('appfuncs').replaceWith('applicationFunctionsPlugin')
-                    .for('eventdispatcher').replaceWith('eventDispatcherPlugin')
-                    .for('eventhandlerbase').replaceWith('eventHandlerPlugin')
+                .for('eventdispatcher').replaceWith('eventDispatcherPlugin')
+                .for('eventhandlerbase').replaceWith('eventHandlerPlugin')
                 .complete(),
                 x=>x.instantiate('eventstore').asFunc().withParameters(options.children || {})
                     .instantiate('readstorerepository').asFunc().withParameters(options.children || {})

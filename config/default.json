@@ -9,8 +9,8 @@
         "adminPassword": "changeit"
       },
       "postgres": {
-        "connectionString": "postgres://methodfitness:password@172.17.0.3/",
-        "postgres": "172.17.0.3",
+        "connectionString": "postgres://methodfitness:password@postgres/",
+        "postgres": "postgres",
         "database": "methodfitness"
       },
       "eventdispatcher": {
