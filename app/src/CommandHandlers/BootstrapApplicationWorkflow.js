@@ -6,7 +6,7 @@
 module.exports = function(eventhandlerbase,
                           eventrepository,
                           logger,
-                          appdomain,co) {
+                          appdomain) {
 
     return class BootstrapApplicationWorkflow extends eventhandlerbase {
         constructor() {
@@ -52,7 +52,6 @@ module.exports = function(eventhandlerbase,
             logger.info('saving trainer');
             logger.trace(trainer);
             yield eventrepository.save(trainer);
-            return 'success';
         }
 
         hireTrainer(vnt) {
