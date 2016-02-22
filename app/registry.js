@@ -7,22 +7,34 @@ var dagon = require('dagon');
 var path = require('path');
 
 module.exports = function(_options) {
-    var options = _options || {};
-    var container = dagon(options.dagon);
+    var options   = _options || {};
+    var container = dagon(options.dagon).container;
     var result;
     try {
-        result = new container(x=> x.pathToRoot(path.join(__dirname, '..'))
-            .requireDirectoryRecursively('./app/src')
-            .groupAllInDirectory('./app/src/CommandHandlers', 'CommandHandlers')
-            .for('eventrepository').instantiate(i=>i.asFunc().withParameters(options.children || {}))
-            .for('appdomain').instantiate(i=>i.asFunc().withParameters(options.children || {}))
-            .for('eventhandlerbase').instantiate(i=>i.asFunc().withParameters(options.children || {}))
-            .for('eventdispatcher').instantiate(i=>i.asFunc().withParameters(options.children || {}))
-            //.for('readstorerepository').instantiate(i=>i.asFunc().withParameters(options.children || {}))
-            .for('corelogger').renameTo('logger').instantiate(i=>i.asFunc().withParameters(options.logger || {}))
-            .for('bluebird').renameTo('Promise')
-            .complete());
-    }catch(ex){
+        result = container(
+                x=> x.pathToRoot(path.join(__dirname, '/../'))
+                .requireDirectoryRecursively('./app/src')
+                .groupAllInDirectory('./app/src/CommandHandlers', 'CommandHandlers_array')
+                .requiredModuleRegistires(['eventstore', 'eventrepository', 'eventhandlerbase', 'eventdispatcher', 'appdomain'])
+                .for('corelogger').renameTo('logger')
+                .for('ramda').renameTo('R')
+                .for('ramdafantasy').renameTo('_fantasy')
+                .for('bluebird').renameTo('Promise')
+                .for('eventstore').replaceWith('eventstorePlugin')
+                .for('eventrepository').replaceWith('eventRepositoryPlugin')
+                .for('readstorerepository').replaceWith('rsRepositoryPlugin')
+                .for('appfuncs').replaceWith('applicationFunctionsPlugin')
+                .for('eventdispatcher').replaceWith('eventDispatcherPlugin')
+                .for('eventhandlerbase').replaceWith('eventHandlerPlugin')
+                .for('appdomain').replaceWith('appDomainPlugin')
+                .complete(),
+                x=>x.instantiate('eventstore').asFunc().withParameters(options.children || {})
+                .instantiate('readstorerepository').asFunc().withParameters(options.children || {})
+                .instantiate('eventrepository').asFunc().withParameters(options.children || {})
+                .instantiate('gesConnection').asFunc().withParameters(options.children || {})
+                .instantiate('logger').asFunc().withParameters(options.logger || {})
+                .complete());
+    } catch (ex) {
         console.log(ex);
         console.log(ex.stack);
     }
