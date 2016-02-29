@@ -15,15 +15,14 @@ module.exports = function(eventhandlerbase,
             this.handlerName   = 'bootstrapApplication';
         }
 
-        *loginTrainer(vnt) {
-            console.log(vnt);
-            this.createNotification(vnt);
-            var trainer = yield eventrepository.getById(appdomain.Trainer, vnt.Id);
-            trainer.loginTrainer(vnt);
-            yield eventrepository.save(trainer, {continuationId});
+        *loginTrainer(cmd) {
+            console.log(cmd);
+            var trainer = yield eventrepository.getById(appdomain.Trainer, cmd.Id);
+            trainer.loginTrainer(cmd);
+            yield eventrepository.save(trainer, { continuationId: cmd.continuationId });
         }
 
-        *bootstrapApplication(vnt) {
+        *bootstrapApplication(cmd) {
             console.log('inside bootstrapper handler');
             logger.info('calling hiretrainer');
             var trainer = new appdomain.Trainer();
@@ -45,16 +44,15 @@ module.exports = function(eventhandlerbase,
                     city    : 'Austin',
                     state   : 'TX',
                     zipCode : '78702'
-                }
-                ,
+                },
                 dob        : new Date()
             });
             logger.info('saving trainer');
             logger.trace(trainer);
-            yield eventrepository.save(trainer);
+            return yield eventrepository.save(trainer, { continuationId: cmd.continuationId });
         }
 
-        hireTrainer(vnt) {
+        hireTrainer(cmd) {
             logger.info('calling hiretrainer');
             var trainer = new appdomain.Trainer();
             trainer.hireTrainer({
