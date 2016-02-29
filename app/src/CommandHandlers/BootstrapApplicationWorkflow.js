@@ -22,7 +22,7 @@ module.exports = function(eventhandlerbase,
             yield eventrepository.save(trainer, { continuationId: cmd.continuationId });
         }
 
-        *bootstrapApplication(cmd) {
+        *bootstrapApplication(cmd, continuationId) {
             console.log('inside bootstrapper handler');
             logger.info('calling hiretrainer');
             var trainer = new appdomain.Trainer();
@@ -49,7 +49,10 @@ module.exports = function(eventhandlerbase,
             });
             logger.info('saving trainer');
             logger.trace(trainer);
-            return yield eventrepository.save(trainer, { continuationId: cmd.continuationId });
+            console.log('==========cmd.continuationId=========');
+            console.log(cmd);
+            console.log('==========ENDcmd.continuationId=========');
+            return yield eventrepository.save(trainer, { continuationId });
         }
 
         hireTrainer(cmd) {
