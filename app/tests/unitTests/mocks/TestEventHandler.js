@@ -1,7 +1,7 @@
 /**
  * Created by rharik on 6/19/15.
  */
-module.exports = function(eventhandlerbase,
+module.exports = function(eventHandler,
                           logger,
                           appdomain) {
 
@@ -9,7 +9,7 @@ module.exports = function(eventhandlerbase,
         handlesEvents: ['bootstrapApplication'],
         handleEvent  : function(event) {
             console.log(event);
-            return eventHandlerBase.handleEvent(event, 'BootstrapApplicationWorkflow', handlers[event.eventName]);
+            return eventHandler.handleEvent(event, 'BootstrapApplicationWorkflow', handlers[event.eventName]);
         },
         handlers     : {
             loginTrainer(vnt) {

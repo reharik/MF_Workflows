@@ -4,9 +4,8 @@
 
 "use strict";
 
-module.exports = function(eventdispatcher, CommandHandlers_array){
+module.exports = function(eventDispatcher, CommandHandlers_array){
     return function(){
-
-        eventdispatcher(CommandHandlers_array.map(x=>new x())).startDispatching('command');
+        eventDispatcher(CommandHandlers_array.map(x => new x())).startDispatching('command');
     };
 };

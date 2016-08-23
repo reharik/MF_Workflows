@@ -3,12 +3,12 @@
  */
 "use strict";
 
-module.exports = function(eventhandlerbase,
-                          eventrepository,
+module.exports = function(eventHandler,
+                          eventRepository,
                           logger,
                           appdomain) {
 
-    return class BootstrapApplicationWorkflow extends eventhandlerbase {
+    return class BootstrapApplicationWorkflow extends eventHandler {
         constructor() {
             super();
             this.handlesEvents = ['bootstrapApplication'];
@@ -17,9 +17,9 @@ module.exports = function(eventhandlerbase,
 
         *loginTrainer(cmd) {
             console.log(cmd);
-            var trainer = yield eventrepository.getById(appdomain.Trainer, cmd.Id);
+            var trainer = yield eventRepository.getById(appdomain.Trainer, cmd.Id);
             trainer.loginTrainer(cmd);
-            yield eventrepository.save(trainer, { continuationId: cmd.continuationId });
+            return yield eventRepository.save(trainer, { continuationId: cmd.continuationId });
         }
 
         *bootstrapApplication(cmd, continuationId) {
@@ -49,13 +49,10 @@ module.exports = function(eventhandlerbase,
             });
             logger.info('saving trainer');
             logger.trace(trainer);
-            console.log('==========cmd.continuationId=========');
-            console.log(cmd);
-            console.log('==========ENDcmd.continuationId=========');
-            return yield eventrepository.save(trainer, { continuationId });
+            return yield eventRepository.save(trainer, { continuationId });
         }
 
-        hireTrainer(cmd) {
+        *hireTrainer(cmd) {
             logger.info('calling hiretrainer');
             var trainer = new appdomain.Trainer();
             trainer.hireTrainer({
@@ -82,7 +79,7 @@ module.exports = function(eventhandlerbase,
             });
             logger.info('saving trainer');
             logger.trace(trainer);
-            eventrepository.save(trainer);
+            return yield eventRepository.save(trainer);
         }
     };
 };
