@@ -3,10 +3,23 @@
  */
 "use strict";
 
+
+
 module.exports = function(eventHandler,
                           eventRepository,
                           logger,
-                          appdomain) {
+                          appdomain, bcryptjs) {
+
+    var createPassword = function *(_password) {
+        try {
+            var salt = yield bcryptjs.genSaltSync(10);
+            var hash = yield bcryptjs.hashSync(_password, salt);
+            return hash;
+        }
+        catch (err) {
+            throw err;
+        }
+    };
 
     return class BootstrapApplicationWorkflow extends eventHandler {
         constructor() {
@@ -29,7 +42,7 @@ module.exports = function(eventHandler,
             trainer.hireTrainer({
                 credentials: {
                     userName: 'admin',
-                    password: '123456'
+                    password: yield createPassword('123123')
                 },
                 contact    : {
                     firstName   : 'Raif',
