@@ -10,10 +10,10 @@ module.exports = function(eventHandler,
                           logger,
                           appdomain, bcryptjs) {
 
-    var createPassword = function *(_password) {
+    var createPassword = function (_password) {
         try {
-            var salt = yield bcryptjs.genSaltSync(10);
-            var hash = yield bcryptjs.hashSync(_password, salt);
+            var salt = bcryptjs.genSaltSync(10);
+            var hash = bcryptjs.hashSync(_password, salt);
             return hash;
         }
         catch (err) {
@@ -42,7 +42,7 @@ module.exports = function(eventHandler,
             trainer.hireTrainer({
                 credentials: {
                     userName: 'admin',
-                    password: yield createPassword('123123')
+                    password: createPassword('123123')
                 },
                 contact    : {
                     firstName   : 'Raif',
