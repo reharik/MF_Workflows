@@ -28,13 +28,6 @@ module.exports = function(eventHandler,
             this.handlerName   = 'bootstrapApplication';
         }
 
-        *loginTrainer(cmd) {
-            console.log(cmd);
-            var trainer = yield eventRepository.getById(appdomain.Trainer, cmd.Id);
-            trainer.loginTrainer(cmd);
-            return yield eventRepository.save(trainer, { continuationId: cmd.continuationId });
-        }
-
         *bootstrapApplication(cmd, continuationId) {
             console.log('inside bootstrapper handler');
             logger.info('calling hiretrainer');
@@ -49,50 +42,22 @@ module.exports = function(eventHandler,
                     lastName    : 'Harik',
                     emailAddress: 'reharik@gmail.com',
                     phone       : '666.666.6666',
-                    secondPhone : '777.777.7777'
+                    secondPhone : '777.777.7777',
+                    address    : {
+                        address1: '1706 willow st',
+                        address2: 'b',
+                        city    : 'Austin',
+                        state   : 'TX',
+                        zipCode : '78702'
+                    }
                 },
-                address    : {
-                    address1: '1706 willow st',
-                    address2: 'b',
-                    city    : 'Austin',
-                    state   : 'TX',
-                    zipCode : '78702'
-                },
-                dob        : new Date()
+                dob        : new Date(),
+                color: '#666666',
+                defaultClientRate: 65
             });
             logger.info('saving trainer');
             logger.trace(trainer);
             return yield eventRepository.save(trainer, { continuationId });
-        }
-
-        *hireTrainer(cmd) {
-            logger.info('calling hiretrainer');
-            var trainer = new appdomain.Trainer();
-            trainer.hireTrainer({
-                credentials: {
-                    userName: 'admin',
-                    password: '123456'
-                },
-                contact    : {
-                    firstName   : 'Raif',
-                    lastName    : 'Harik',
-                    emailAddress: 'reharik@gmail.com',
-                    phone       : '666.666.6666',
-                    secondPhone : '777.777.7777'
-                },
-                address    : {
-                    address1: '1706 willow st',
-                    address2: 'b',
-                    city    : 'Austin',
-                    state   : 'TX',
-                    zipCode : '78702'
-                }
-                ,
-                dob        : new Date()
-            });
-            logger.info('saving trainer');
-            logger.trace(trainer);
-            return yield eventRepository.save(trainer);
         }
     };
 };
