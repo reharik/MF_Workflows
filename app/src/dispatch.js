@@ -4,8 +4,9 @@
 
 "use strict";
 
-module.exports = function(eventDispatcher, CommandHandlers_array){
+module.exports = function(eventDispatcher, CommandHandlers_array, eventReceiver){
     return function(){
-        eventDispatcher(CommandHandlers_array.map(x => new x())).startDispatching('command');
+        var source = eventDispatcher().startDispatching('command');
+        CommandHandlers_array.map(x => eventReceiver(source, x()));
     };
 };

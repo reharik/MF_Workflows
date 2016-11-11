@@ -1,4 +1,4 @@
-NAME=workflows/dispatcher
+NAME=mf_workflows
 VERSION=$$(git rev-parse --short HEAD)
 NODE_ENV=qa
 

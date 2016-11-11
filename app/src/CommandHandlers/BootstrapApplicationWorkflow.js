@@ -5,7 +5,7 @@
 
 
 
-module.exports = function(eventHandler,
+module.exports = function(
                           eventRepository,
                           logger,
                           appdomain, bcryptjs) {
@@ -21,14 +21,9 @@ module.exports = function(eventHandler,
         }
     };
 
-    return class BootstrapApplicationWorkflow extends eventHandler {
-        constructor() {
-            super();
-            this.handlesEvents = ['bootstrapApplication'];
-            this.handlerName   = 'bootstrapApplication';
-        }
+    return function BootstrapApplicationWorkflow() {
 
-        *bootstrapApplication(cmd, continuationId) {
+        async function bootstrapApplication(cmd, continuationId) {
             console.log('inside bootstrapper handler');
             logger.info('calling hiretrainer');
             var trainer = new appdomain.Trainer();
@@ -57,7 +52,11 @@ module.exports = function(eventHandler,
             });
             logger.info('saving trainer');
             logger.trace(trainer);
-            return yield eventRepository.save(trainer, { continuationId });
+            return await eventRepository.save(trainer, { continuationId });
+        }
+        return {
+            handlerName: 'BootstrapApplicationWorkflow',
+            bootstrapApplication
         }
     };
 };

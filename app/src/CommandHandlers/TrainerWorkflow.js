@@ -3,8 +3,7 @@
  */
 "use strict";
 
-module.exports = function(eventHandler,
-                          eventRepository,
+module.exports = function(eventRepository,
                           logger,
                           appdomain, bcryptjs) {
 
@@ -19,28 +18,32 @@ module.exports = function(eventHandler,
         }
     };
 
-    return class TrainerWorkflow extends eventHandler {
-        constructor() {
-            super();
-            this.handlesEvents = ['loginTrainer','hireTrainer'];
-            this.handlerName   = 'TrainerWorkflow';
-        }
+    return function TrainerWorkflow(){
 
-        *loginTrainer(cmd) {
-            console.log(cmd);
-            var trainer = yield eventRepository.getById(appdomain.Trainer, cmd.Id);
+        async function loginTrainer(cmd, continuationId ) {
+            var trainer = await eventRepository.getById(appdomain.Trainer, cmd.Id);
             trainer.loginTrainer(cmd);
-            return yield eventRepository.save(trainer, { continuationId: cmd.continuationId });
+            return await eventRepository.save(trainer, { continuationId });
         }
 
-        *hireTrainer(cmd) {
+        async function hireTrainer(cmd, continuationId) {
             logger.info('calling hiretrainer');
             var trainer = new appdomain.Trainer();
-            cmd.credentials.password = createPassword(cmd.credentials.password);
-            trainer.hireTrainer(cmd);
+            var cmdClone = Object.assign({},cmd)
+            cmdClone.credentials.password = createPassword(cmd.credentials.password);
+            trainer.hireTrainer(cmdClone);
+
             logger.info('saving trainer');
             logger.trace(trainer);
-            return yield eventRepository.save(trainer);
+
+            await eventRepository.save(trainer, { continuationId });
+            return {trainerId: trainer._id}
+        }
+
+        return {
+            handlerName: 'TrainerWorkflow',
+            loginTrainer,
+            hireTrainer
         }
     };
 };
