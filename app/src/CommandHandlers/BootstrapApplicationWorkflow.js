@@ -35,8 +35,8 @@ module.exports = function(
                 contact    : {
                     firstName   : 'Raif',
                     lastName    : 'Harik',
-                    emailAddress: 'reharik@gmail.com',
-                    phone       : '666.666.6666',
+                    email: 'reharik@gmail.com',
+                    mobilePhone       : '666.666.6666',
                     secondPhone : '777.777.7777',
                     address    : {
                         address1: '1706 willow st',
