@@ -37,10 +37,10 @@ module.exports = function(
                     lastName    : 'Harik',
                     email: 'reharik@gmail.com',
                     mobilePhone       : '666.666.6666',
-                    secondPhone : '777.777.7777',
+                    secondaryPhone : '777.777.7777',
                     address    : {
-                        address1: '1706 willow st',
-                        address2: 'b',
+                        street1: '1706 willow st',
+                        street2: 'b',
                         city    : 'Austin',
                         state   : 'TX',
                         zipCode : '78702'
