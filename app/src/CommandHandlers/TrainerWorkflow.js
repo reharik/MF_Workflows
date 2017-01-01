@@ -5,23 +5,12 @@
 
 module.exports = function(eventRepository,
                           logger,
-                          appdomain, bcryptjs) {
-
-    var createPassword = function (_password) {
-        try {
-            var salt = bcryptjs.genSaltSync(10);
-            var hash = bcryptjs.hashSync(_password, salt);
-            return hash;
-        }
-        catch (err) {
-            throw err;
-        }
-    };
+                          appdomain) {
 
     return function TrainerWorkflow(){
 
         async function loginTrainer(cmd, continuationId ) {
-            var trainer = await eventRepository.getById(appdomain.Trainer, cmd.Id);
+            var trainer = await eventRepository.getById(appdomain.Trainer, cmd.id, 5);
             trainer.loginTrainer(cmd);
             return await eventRepository.save(trainer, { continuationId });
         }
@@ -29,9 +18,7 @@ module.exports = function(eventRepository,
         async function hireTrainer(cmd, continuationId) {
             logger.info('calling hiretrainer');
             var trainer = new appdomain.Trainer();
-            var cmdClone = Object.assign({},cmd)
-            cmdClone.credentials.password = createPassword(cmd.credentials.password);
-            trainer.hireTrainer(cmdClone);
+            trainer.hireTrainer(cmd);
 
             logger.info('saving trainer');
             logger.trace(trainer);
@@ -40,10 +27,63 @@ module.exports = function(eventRepository,
             return {trainerId: trainer._id}
         }
 
+        async function updateTrainerAddress(cmd, continuationId) {
+            logger.info('calling updateTrainerAddress');
+            var trainer = await eventRepository.getById(appdomain.Trainer, cmd.id);
+            trainer.updateTrainerAddress(cmd);
+
+            logger.info('saving trainer');
+            logger.trace(trainer);
+
+            await eventRepository.save(trainer, { continuationId });
+            return {trainerId: trainer._id};
+        }
+
+        async function updateTrainerContact(cmd, continuationId) {
+            logger.info('calling updateTrainerContact');
+            var trainer = await eventRepository.getById(appdomain.Trainer, cmd.id);
+            trainer.updateTrainerContact(cmd);
+
+            logger.info('saving trainer');
+            logger.trace(trainer);
+
+            await eventRepository.save(trainer, { continuationId });
+            return {trainerId: trainer._id};
+        }
+
+        async function updateTrainerPassword(cmd, continuationId) {
+            logger.info('calling updateTrainerPassword');
+            var trainer = await eventRepository.getById(appdomain.Trainer, cmd.id);
+            trainer.updateTrainerPassword(cmd);
+
+            logger.info('saving trainer');
+            logger.trace(trainer);
+
+            await eventRepository.save(trainer, { continuationId });
+            return {trainerId: trainer._id};
+        }
+
+        async function updateTrainerInfo(cmd, continuationId) {
+            logger.info('calling updateTrainerInfo');
+
+            var trainer = await eventRepository.getById(appdomain.Trainer, cmd.id, 5);
+            trainer.updateTrainerInfo(cmd);
+
+            logger.info('saving trainer');
+            logger.trace(trainer);
+
+            await eventRepository.save(trainer, { continuationId });
+            return {trainerId: trainer._id};
+        }
+
         return {
             handlerName: 'TrainerWorkflow',
             loginTrainer,
-            hireTrainer
+            hireTrainer,
+            updateTrainerInfo,
+            updateTrainerAddress,
+            updateTrainerPassword,
+            updateTrainerContact
         }
     };
 };
