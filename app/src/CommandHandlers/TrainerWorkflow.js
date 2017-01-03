@@ -66,8 +66,21 @@ module.exports = function(eventRepository,
         async function updateTrainerInfo(cmd, continuationId) {
             logger.info('calling updateTrainerInfo');
 
-            var trainer = await eventRepository.getById(appdomain.Trainer, cmd.id, 5);
+            var trainer = await eventRepository.getById(appdomain.Trainer, cmd.id);
             trainer.updateTrainerInfo(cmd);
+
+            logger.info('saving trainer');
+            logger.trace(trainer);
+
+            await eventRepository.save(trainer, { continuationId });
+            return {trainerId: trainer._id};
+        }
+
+        async function updateTrainersClients(cmd, continuationId) {
+            logger.info('calling updateTrainersClients');
+
+            var trainer = await eventRepository.getById(appdomain.Trainer, cmd.id);
+            trainer.updateTrainersClients(cmd);
 
             logger.info('saving trainer');
             logger.trace(trainer);
@@ -83,7 +96,8 @@ module.exports = function(eventRepository,
             updateTrainerInfo,
             updateTrainerAddress,
             updateTrainerPassword,
-            updateTrainerContact
+            updateTrainerContact,
+            updateTrainersClients
         }
     };
 };
