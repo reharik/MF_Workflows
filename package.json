@@ -31,7 +31,7 @@
     "dagon": "git://github.com/reharik/dagon.git",
     "extend": "^3.0.0",
     "ges-eventsourcing": "reharik/ges-eventsourcing.git",
-    "moment-range": "^3.0.0-0",
+    "moment": "^2.17.1",
     "ramda": "^0.18.0",
     "ramda-fantasy": "^0.4.1",
     "uuid": "^2.0.1"
