@@ -15,14 +15,14 @@ module.exports = function(eventRepository,
       var newAppointmentId = day.getNewAppointmentId(cmd.startTime, cmd.endTime, cmd.trainer);
 
       logger.info('saving Day');
-      logger.trace(day);
+      logger.trace(day._id);
 
       await eventRepository.save(day, { continuationId });
       return {appointmentId: newAppointmentId}
     }
 
     return {
-      handlerName: 'AppointmentWorkflow',
+      handlerName: 'DayWorkflow',
       scheduleAppointment
     }
   };
