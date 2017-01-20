@@ -6,7 +6,7 @@ module.exports = function(eventRepository,
 
     async function scheduleAppointment(cmd, continuationId) {
       logger.info('calling scheduleAppointment on Day');
-      var day = await eventRepository.getById(appdomain.Day, cmd.id);
+      var day = await eventRepository.getById(appdomain.Day, cmd.entityName);
         if(!day){
           day = new appdomain.Day();
         }
