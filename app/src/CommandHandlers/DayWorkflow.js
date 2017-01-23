@@ -15,7 +15,7 @@ module.exports = function(eventRepository,
     }
 
     async function scheduleAppointment(cmd, continuationId) {
-      let Day = await scheduleAppointmentBase(cmd);
+      let day = await scheduleAppointmentBase(cmd);
       var newAppointmentId = day.getNewAppointmentId(cmd.startTime, cmd.endTime, cmd.trainer);
 
       logger.info('saving Day');
