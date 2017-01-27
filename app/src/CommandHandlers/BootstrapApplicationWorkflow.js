@@ -30,12 +30,13 @@ module.exports = function(
             trainer.hireTrainer({
                 credentials: {
                     userName: 'admin',
-                    password: createPassword('123123')
+                    password: createPassword('123123'),
+                    role: 'admin'
                 },
                 contact    : {
                     firstName   : 'Raif',
                     lastName    : 'Harik',
-                    email: 'reharik@gmail.com',
+                    email: 'admin',
                     mobilePhone       : '666.666.6666',
                     secondaryPhone : '777.777.7777',
                     address    : {

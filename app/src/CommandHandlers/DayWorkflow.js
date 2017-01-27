@@ -13,6 +13,12 @@ module.exports = function(eventRepository,
     async function changeAppointmentClients(cmd, continuationId) {
       return await updateAppointment(cmd, continuationId);
     }
+    async function changeAppointmentTrainer(cmd, continuationId) {
+      return await updateAppointment(cmd, continuationId);
+    }
+    async function updateNotesForAppointment(cmd, continuationId) {
+      return await updateAppointment(cmd, continuationId);
+    }
 
     async function scheduleAppointment(cmd, continuationId) {
       let day = await scheduleAppointmentBase(cmd);
@@ -86,8 +92,10 @@ module.exports = function(eventRepository,
       rescheduleAppointmentTime,
       changeAppointmentType,
       changeAppointmentClients,
+      changeAppointmentTrainer,
       rescheduleAppointmentToNewDay,
-      cancelAppointment
+      cancelAppointment,
+      updateNotesForAppointment
     }
   };
 };
