@@ -26,17 +26,18 @@ module.exports = function(eventRepository,
     }
 
     async function rescheduleAppointmentToNewDay(cmd, continuationId) {
-      let Day = await scheduleAppointmentBase(cmd);
-      var oldDay = await eventRepository.getById(appdomain.Day, cmd.entityName);
-      oldDay.removeAppointment(cmd);
+      let day = await scheduleAppointmentBase(cmd);
+      var oldDay = await eventRepository.getById(appdomain.Day, cmd.originalEntityName);
+      
+      oldDay.cancelAppointment(cmd);
       var newAppointmentId = day.getNewAppointmentId(cmd.startTime, cmd.endTime, cmd.trainer);
       
       logger.info('saving Day');
       logger.trace(day._id);
-      logger.info('saving Day');
-      logger.trace(oldDay._id);
-
       await eventRepository.save(day, { continuationId });
+
+      logger.info('saving OldDay');
+      logger.trace(oldDay._id);
       await eventRepository.save(oldDay, { continuationId });
       return {appointmentId: newAppointmentId}
     }
@@ -57,7 +58,7 @@ module.exports = function(eventRepository,
       if(!day){
         day = new appdomain.Day();
       }
-      day.updateAppointment(cmd);
+      day[cmd.commandName](cmd);
 
       logger.info('saving Day');
       logger.trace(day._id);

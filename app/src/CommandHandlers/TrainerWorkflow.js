@@ -9,11 +9,11 @@ module.exports = function(eventRepository,
 
     return function TrainerWorkflow(){
 
-        async function loginTrainer(cmd, continuationId ) {
-            var trainer = await eventRepository.getById(appdomain.Trainer, cmd.id, 5);
-            trainer.loginTrainer(cmd);
-            return await eventRepository.save(trainer, { continuationId });
-        }
+        // async function loginTrainer(cmd, continuationId ) {
+        //     var trainer = await eventRepository.getById(appdomain.Trainer, cmd.id, 5);
+        //     trainer.loginTrainer(cmd);
+        //     return await eventRepository.save(trainer, { continuationId });
+        // }
 
         async function hireTrainer(cmd, continuationId) {
             logger.info('calling hiretrainer');
@@ -91,7 +91,6 @@ module.exports = function(eventRepository,
 
         return {
             handlerName: 'TrainerWorkflow',
-            loginTrainer,
             hireTrainer,
             updateTrainerInfo,
             updateTrainerAddress,
