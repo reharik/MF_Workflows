@@ -9,13 +9,10 @@
         "adminPassword": "changeit"
       },
       "postgres": {
-        "connectionString": "postgres://methodfitness:password@postgres/",
-        "postgres": "postgres",
-        "database": "methodfitness",
-        "config": {
+        "config" :{
           "user": "methodfitness",
           "database": "methodfitness",
-          "host": "postgres",
+          "host"     : "127.0.0.1",
           "password": "password",
           "port": "5432",
           "max": "10",
