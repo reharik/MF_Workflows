@@ -37,7 +37,7 @@ module.exports = function(eventRepository,
       
       oldDay.cancelAppointment(cmd);
       var newAppointmentId = day.getNewAppointmentId(cmd.startTime, cmd.endTime, cmd.trainer);
-      
+
       logger.info('saving Day');
       logger.trace(day._id);
       await eventRepository.save(day, { continuationId });
@@ -45,7 +45,10 @@ module.exports = function(eventRepository,
       logger.info('saving OldDay');
       logger.trace(oldDay._id);
       await eventRepository.save(oldDay, { continuationId });
-      return {appointmentId: newAppointmentId}
+
+      return {updateType: 'rescheduleAppointmentToNewDay',
+        oldAppointmentId: cmd.appointmentId,
+        newAppointmentId: newAppointmentId}
     }
 
     async function scheduleAppointmentBase(cmd, continuationId) {
