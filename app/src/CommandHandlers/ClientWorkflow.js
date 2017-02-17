@@ -57,6 +57,18 @@ module.exports = function(eventRepository,
             return {clientId: client._id};
         }
 
+        async function updateClientSource(cmd, continuationId) {
+            logger.info('calling updateClientSource');
+            var client = await eventRepository.getById(appdomain.Client, cmd.id);
+            client.updateClientSource(cmd);
+
+            logger.info('saving client');
+            logger.trace(client);
+
+            await eventRepository.save(client, { continuationId });
+            return {clientId: client._id};
+        }
+
         return {
             handlerName: 'ClientWorkflow',
             addClient,
