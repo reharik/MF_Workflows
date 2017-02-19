@@ -69,12 +69,39 @@ module.exports = function(eventRepository,
             return {clientId: client._id};
         }
 
+        async function archiveClient(cmd, continuationId) {
+            logger.info('calling archiveClient');
+            var client = await eventRepository.getById(appdomain.Client, cmd.id);
+            client.archiveClient(cmd);
+
+            logger.info('saving client');
+            logger.trace(client);
+
+            await eventRepository.save(client, { continuationId });
+            return {clientId: client._id};
+        }
+
+        async function unArchiveClient(cmd, continuationId) {
+            logger.info('calling unArchiveClient');
+            var client = await eventRepository.getById(appdomain.Client, cmd.id);
+            client.unArchiveClient(cmd);
+
+            logger.info('saving client');
+            logger.trace(client);
+
+            await eventRepository.save(client, { continuationId });
+            return {clientId: client._id};
+        }
+
         return {
             handlerName: 'ClientWorkflow',
             addClient,
             updateClientInfo,
             updateClientAddress,
-            updateClientContact
+            updateClientContact,
+            updateClientSource,
+            archiveClient,
+            unArchiveClient
         }
     };
 };

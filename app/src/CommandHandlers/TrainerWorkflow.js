@@ -89,6 +89,32 @@ module.exports = function(eventRepository,
             return {trainerId: trainer._id};
         }
 
+        async function archiveTrainer(cmd, continuationId) {
+            logger.info('calling archiveTrainer');
+
+            var trainer = await eventRepository.getById(appdomain.Trainer, cmd.id);
+            trainer.archiveTrainer(cmd);
+
+            logger.info('saving trainer');
+            logger.trace(trainer);
+
+            await eventRepository.save(trainer, { continuationId });
+            return {trainerId: trainer._id};
+        }
+
+        async function unArchiveTrainer(cmd, continuationId) {
+            logger.info('calling unArchiveTrainer');
+
+            var trainer = await eventRepository.getById(appdomain.Trainer, cmd.id);
+            trainer.unArchiveTrainer(cmd);
+
+            logger.info('saving trainer');
+            logger.trace(trainer);
+
+            await eventRepository.save(trainer, { continuationId });
+            return {trainerId: trainer._id};
+        }
+
         return {
             handlerName: 'TrainerWorkflow',
             hireTrainer,
@@ -96,7 +122,9 @@ module.exports = function(eventRepository,
             updateTrainerAddress,
             updateTrainerPassword,
             updateTrainerContact,
-            updateTrainersClients
+            updateTrainersClients,
+            archiveTrainer,
+            unArchiveTrainer
         }
     };
 };
