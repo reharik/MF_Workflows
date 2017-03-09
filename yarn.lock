@@ -260,7 +260,7 @@ generic-pool@2.4.2:
 
 ges-eventsourcing@reharik/ges-eventsourcing#eventstore_node:
   version "0.0.1"
-  resolved "https://codeload.github.com/reharik/ges-eventsourcing/tar.gz/d0ef24ca518701ef7725691ab83afa90a6f78232"
+  resolved "https://codeload.github.com/reharik/ges-eventsourcing/tar.gz/6a7c24dd5c8d0afda555dad3bddcab9c7a78c96f"
   dependencies:
     JSON "^1.0.0"
     bluebird "^3.4.1"
