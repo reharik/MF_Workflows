@@ -2,7 +2,7 @@
   "configs": {
     "children": {
       "eventstore": {
-        "host": "eventstore",
+        "host": "localhost",
         "systemUsers": {
           "admin": "admin"
         },
