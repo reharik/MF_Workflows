@@ -28,7 +28,6 @@
     "co": "^4.6.0",
     "config": "^1.14.0",
     "corelogger": "reharik/core_logger",
-    "dagon": "reharik/dagon",
     "extend": "^3.0.0",
     "ges-eventsourcing": "reharik/ges-eventsourcing#eventstore_node",
     "moment": "^2.17.1",
