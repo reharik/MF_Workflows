@@ -22,7 +22,6 @@
   "license": "MIT",
   "dependencies": {
     "JSON": "^1.0.0",
-    "appdomain": "reharik/mf_domain",
     "bcryptjs": "^2.3.0",
     "bluebird": "^3.4.1",
     "co": "^4.6.0",

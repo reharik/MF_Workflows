@@ -3,7 +3,7 @@
  */
 module.exports = function(eventHandler,
                           logger,
-                          appdomain) {
+                          Trainer) {
 
     return {
         handlesEvents: ['bootstrapApplication'],
@@ -27,7 +27,7 @@ module.exports = function(eventHandler,
 
         hireTrainer() {
             logger.info('calling hiretrainer');
-            var trainer = new appdomain.Trainer();
+            var trainer = new Trainer();
             trainer.hireTrainer({
                 credentials: {
                     userName: 'admin',

@@ -1,6 +1,6 @@
 module.exports = function(eventRepository,
                           logger,
-                          appdomain) {
+                          Day) {
 
   return function DayWorkflow(){
 
@@ -33,7 +33,7 @@ module.exports = function(eventRepository,
 
     async function rescheduleAppointmentToNewDay(cmd, continuationId) {
       let day = await scheduleAppointmentBase(cmd);
-      var oldDay = await eventRepository.getById(appdomain.Day, cmd.originalEntityName);
+      var oldDay = await eventRepository.getById(Day, cmd.originalEntityName);
       
       oldDay.cancelAppointment(cmd);
       var newAppointmentId = day.getNewAppointmentId(cmd.startTime, cmd.endTime, cmd.trainer);
@@ -53,9 +53,9 @@ module.exports = function(eventRepository,
 
     async function scheduleAppointmentBase(cmd, continuationId) {
       logger.info(`calling ${cmd.commandName} on Day`);
-      var day = await eventRepository.getById(appdomain.Day, cmd.entityName);
+      var day = await eventRepository.getById(Day, cmd.entityName);
       if(!day){
-        day = new appdomain.Day();
+        day = new Day();
       }
       day.scheduleAppointment(cmd);
       return day;
@@ -63,9 +63,9 @@ module.exports = function(eventRepository,
 
     async function updateAppointment(cmd, continuationId) {
       logger.info(`calling ${cmd.commandName} on Day`);
-      var day = await eventRepository.getById(appdomain.Day, cmd.entityName);
+      var day = await eventRepository.getById(Day, cmd.entityName);
       if(!day){
-        day = new appdomain.Day();
+        day = new Day();
       }
       day[cmd.commandName](cmd);
 
@@ -78,7 +78,7 @@ module.exports = function(eventRepository,
 
     async function cancelAppointment(cmd, continuationId) {
       logger.info(`calling ${cmd.commandName} on Day`);
-      var day = await eventRepository.getById(appdomain.Day, cmd.entityName);
+      var day = await eventRepository.getById(Day, cmd.entityName);
       day.cancelAppointment(cmd);
 
       logger.info('saving Day');

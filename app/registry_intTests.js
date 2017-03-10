@@ -13,11 +13,9 @@ module.exports = function(_options) {
             .groupAllInDirectory('./app/src/CommandHandlers', 'CommandHandlers')
             .for('eventmodels').instantiate(i=>i.asFunc())
             .for('eventstore').instantiate(i=>i.asFunc().withParameters(options.children || {}))
-            .for('appdomain').instantiate(i=>i.asFunc().withParameters(options.children || {}))
             .for('eventhandlerbase').instantiate(i=>i.asFunc().withParameters(options.children || {}))
             .for('eventdispatcher').instantiate(i=>i.asFunc().withParameters(options.children || {}))
             .for('eventrepository').instantiate(i=>i.asFunc().withParameters(options.children || {}))
-            //.for('readstorerepository').instantiate(i=>i.asFunc().withParameters(options.children || {}))
             .for('corelogger').renameTo('logger').instantiate(i=>i.asFunc().withParameters(options.logger || {}))
             .for('bluebird').renameTo('Promise')
             .complete());
