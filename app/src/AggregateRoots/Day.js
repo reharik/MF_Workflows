@@ -80,29 +80,9 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                 'scheduleAppointment': function(cmd) {
                     scheduleAppointment(cmd);
                 },
-                'rescheduleAppointmentToNewDay': function(cmd) {
-                    if(this._id === cmd.originalEntityName){
-                        _cancelAppointment(cmd);
-                    } else if(!this._id || this._id === cmd.entityName) {
-                        scheduleAppointment(cmd);
-                    }
-                },
-                'changeAppointmentType': function(cmd) {
+                'updateAppointment': function(cmd) {
                     updateAppointment(cmd);
                 },
-                'updateNotesForAppointment': function(cmd) {
-                    updateAppointment(cmd);
-                },
-                'changeAppointmentClients': function(cmd) {
-                    updateAppointment(cmd);
-                },
-                'changeAppointmentTrainer': function(cmd) {
-                    updateAppointment(cmd);
-                },
-                'rescheduleAppointmentTime': function(cmd) {
-                    updateAppointment(cmd);
-                },
-
                 'cancelAppointment': function(cmd) {
                     _cancelAppointment(cmd);
                 }
@@ -112,28 +92,16 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
 
         mapCommandToEvent(cmd) {
             switch(cmd.commandName){
-                case 'changeAppointmentType':{
-                    return 'appointmentTypeChanged'
+                case 'updateAppointment': {
+                    return 'appointmentUpdated'
                 }
-                case 'changeAppointmentClients':{
-                    return 'clientsChangedForAppointment'
-                }
-                case 'changeAppointmentTrainer':{
-                    return 'trainerChangedForAppointment'
-                }
-                case 'rescheduleAppointmentTime':{
-                    return 'timeChangedForAppointment'
-                }
-                case 'updateNotesForAppointment': {
-                    return 'notesForAppointmentUpdated'
-                }
-                case 'rescheduleAppointmentToNewDay':{
+                case 'rescheduleAppointment':{
                     if(this._id === cmd.originalEntityName){
-                        return 'appointmentMovedToDifferentDay';
+                        return 'appointmentCanceled';
                     } else if(!this._id || this._id === cmd.entityName) {
-                        return 'appointmentMovedFromDifferentDay';
+                        return 'appointmentScheduled';
                     }
-                    break;
+                    return 'appointmentRescheduled';
                 }
                 case 'cancelAppointment':{
                     return 'appointmentCanceled'
@@ -188,19 +156,7 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                 'appointmentCanceled': function (event) {
                     _appointmentCanceled(event);
                 },
-                'appointmentTypeChanged': function (event) {
-                    appointmentUpdated(event);
-                },
-                'clientsChangedForAppointment': function (event) {
-                    appointmentUpdated(event);
-                },
-                'trainerChangedForAppointment': function (event) {
-                    appointmentUpdated(event);
-                },
-                'timeChangedForAppointment': function (event) {
-                    appointmentUpdated(event);
-                },
-                'notesForAppointmentUpdated': function (event) {
+                'appointmentUpdated': function (event) {
                     appointmentUpdated(event);
                 }
             }
