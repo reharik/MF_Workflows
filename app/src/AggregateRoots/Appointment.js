@@ -19,7 +19,6 @@ module.exports = function (AggregateRootBase, invariant, uuid, moment) {
         'scheduleAppointment': function (cmd) {
           this.raiseEvent({
             eventName: 'appointmentScheduled',
-            data: {
               id: uuid.v4(),
               appointmentType: cmd.appt.appointmentType,
               date: cmd.appt.date,
@@ -29,7 +28,6 @@ module.exports = function (AggregateRootBase, invariant, uuid, moment) {
               clients: cmd.appt.clients,
               notes: cmd.appt.notes,
               entityName: cmd.id
-            }
           });
         }
       }
@@ -39,11 +37,11 @@ module.exports = function (AggregateRootBase, invariant, uuid, moment) {
       return {
         'appointmentScheduled': function (event) {
           this._id = event.data.id;
-          this.appointmentType = event.data.appointmentType;
-          this.startTime = event.data.startTime;
-          this.endTime = event.data.endTime;
-          this.trainer = event.data.trainer;
-          this.clients = event.data.clients;
+          this.appointmentType = event.appointmentType;
+          this.startTime = event.startTime;
+          this.endTime = event.endTime;
+          this.trainer = event.trainer;
+          this.clients = event.clients;
         }.bind(this)
       }
     }

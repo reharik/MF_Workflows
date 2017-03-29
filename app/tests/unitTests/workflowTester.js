@@ -38,7 +38,7 @@ describe('MF_WORKFLOWS', function() {
         eventData = {
             eventName       : 'someEventNotificationOn',
             continuationId  : '6d4f1122-b866-409f-98d8-10fb6451de3c',
-            originalEventNumber: 123,
+          commitPosition: 123,
             data            : {some: 'data'}
         };
 
