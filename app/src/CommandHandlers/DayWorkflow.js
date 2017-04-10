@@ -4,14 +4,6 @@ module.exports = function(eventRepository,
 
   return function DayWorkflow(){
 
-    async function rescheduleAppointment(cmd, continuationId) {
-      if(cmd.originalEntityName !== cmd.entityName){
-        return (rescheduleAppointmentToNewDay(cmd, continuationId))
-      }
-      return await updateAppointment(cmd, continuationId);
-    }
-
-
     async function scheduleAppointment(cmd, continuationId) {
       let day = await scheduleAppointmentBase(cmd);
       var newAppointmentId = day.getNewAppointmentId(cmd.startTime, cmd.endTime, cmd.trainer);
@@ -50,10 +42,16 @@ module.exports = function(eventRepository,
       return {appointmentId: cmd.appointmentId}
     }
 
+    async function rescheduleAppointment(cmd, continuationId) {
+      if(cmd.originalEntityName !== cmd.entityName){
+        return (rescheduleAppointmentToNewDay(cmd, continuationId))
+      }
+      return await updateAppointment(cmd, continuationId);
+    }
+
     async function rescheduleAppointmentToNewDay(cmd, continuationId) {
       let day = await scheduleAppointmentBase(cmd);
       var oldDay = await eventRepository.getById(Day, cmd.originalEntityName);
-
       oldDay.cancelAppointment(cmd);
       var newAppointmentId = day.getNewAppointmentId(cmd.startTime, cmd.endTime, cmd.trainer);
 
