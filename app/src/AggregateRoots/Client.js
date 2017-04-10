@@ -8,6 +8,7 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
     constructor() {
       super();
       this._isArchived;
+      this.sessions;
       this.type = 'Client';
     }
 
@@ -57,6 +58,21 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
             id: this._id,
             unArchivedDate: new Date()
           });
+        },
+        "purchaseSessions": function(cmd) {
+          // add sessions to collection
+          cmd.eventName = 'sessionsPurchased';
+          this.raiseEvent(cmd);
+        },
+        "refundSessions": function(cmd) {
+          // remove sessions from collection
+          cmd.eventName = 'sessionsRefunded';
+          this.raiseEvent(cmd);
+        },
+        "cancelSessionPurchaseDueToError": function(cmd) {
+          // remove sessions from collection
+          cmd.eventName = 'sessionPurchaseCanceledDueToError';
+          this.raiseEvent(cmd);
         }
       }
     }
@@ -70,8 +86,16 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
         'clientArchived': function (event) {
           this._isArchived = true;
         }.bind(this),
-
         'clientUnArchived': function (event) {
+          this._isArchived = false;
+        }.bind(this),
+        'sessionsPurchased': function (event) {
+          this._isArchived = false;
+        }.bind(this),
+        'sessionsRefunded': function (event) {
+          this._isArchived = false;
+        }.bind(this),
+        'sessionPurchaseCanceledDueToError': function (event) {
           this._isArchived = false;
         }.bind(this)
       }
