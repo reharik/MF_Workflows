@@ -3,12 +3,12 @@ module.exports = function(eventRepository,
                           Client,
                           Session) {
 
-  return function PurchaseSessionsWorkflow(){
+  return function PurchasesWorkflow(){
 
-    async function purchaseSessions(cmd, continuationId) {
-      logger.info('calling purchaseSessions');
+    async function purchases(cmd, continuationId) {
+      logger.info('calling purchases');
       var client = await eventRepository.getById(Client, cmd.id);
-      client.purchaseSessions(cmd);
+      client.purchases(cmd);
       const sessions = generateSessions(cmd);
 
       logger.info('saving client');
@@ -38,9 +38,9 @@ module.exports = function(eventRepository,
         clientId
     });
 
-    createNewSession = (cmd, purchasePrice, purchaseSessionId) => {
+    createNewSession = (cmd, purchasePrice, purchaseId) => {
       cmd.sessionId = uuid.v4();
-      cmd.purchaseSessionId = purchaseSessionId;
+      cmd.purchaseId = purchaseId;
       cmd.purchasePrice = purchasePrice;
       let session = new Session();
       session.createSession(cmd);
@@ -81,8 +81,8 @@ module.exports = function(eventRepository,
     };
 
     return {
-      handlerName: 'PurchaseSessionsWorkflow',
-      purchaseSessions
+      handlerName: 'PurchasesWorkflow',
+      purchases
     }
   };
 };

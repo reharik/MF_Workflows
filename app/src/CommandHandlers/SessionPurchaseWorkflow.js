@@ -2,12 +2,12 @@ module.exports = function(eventRepository,
                           logger,
                           Client) {
 
-  return function SessionPurchaseWorkflow() {
+  return function PurchaseWorkflow() {
 
-    async function purchaseSessions(cmd, continuationId) {
-      logger.info('calling purchaseSessions');
+    async function purchases(cmd, continuationId) {
+      logger.info('calling purchases');
       var client = await eventRepository.getById(Client, cmd.clientId);
-      client.purchaseSessions(cmd);
+      client.purchases(cmd);
 
       logger.info('saving client');
       logger.trace(client);
@@ -16,10 +16,10 @@ module.exports = function(eventRepository,
       return {clientId: client._id}
     }
 
-    async function refundSessionPurchase(cmd, continuationId) {
-      logger.info('calling refundSessionPurchase');
+    async function refundPurchase(cmd, continuationId) {
+      logger.info('calling refundPurchase');
       var client = await eventRepository.getById(Client, cmd.clientId);
-      client.refundSessionPurchase(cmd);
+      client.refundPurchase(cmd);
 
       logger.info('saving client');
       logger.trace(client);
@@ -28,10 +28,10 @@ module.exports = function(eventRepository,
       return {clientId: client._id}
     }
 
-    async function cancelSessionPurchaseDueToError(cmd, continuationId) {
-      logger.info('calling cancelSessionPurchaseDueToError');
+    async function cancelPurchaseDueToError(cmd, continuationId) {
+      logger.info('calling cancelPurchaseDueToError');
       var client = await eventRepository.getById(Client, cmd.clientId);
-      client.cancelSessionPurchaseDueToError(cmd);
+      client.cancelPurchaseDueToError(cmd);
 
       logger.info('saving client');
       logger.trace(client);
@@ -41,10 +41,10 @@ module.exports = function(eventRepository,
     }
 
     return {
-      handlerName: 'SessionPurchaseWorkflow',
-      purchaseSessions,
-      refundSessionPurchase,
-      cancelSessionPurchaseDueToError
+      handlerName: 'PurchaseWorkflow',
+      purchases,
+      refundPurchase,
+      cancelPurchaseDueToError
     }
   };
 };
