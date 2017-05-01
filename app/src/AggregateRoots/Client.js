@@ -3,12 +3,13 @@
  */
 'use strict';
 
-module.exports = function(AggregateRootBase, invariant, uuid) {
+module.exports = function(AggregateRootBase, ClientInventory, invariant, uuid) {
   return class Client extends AggregateRootBase {
     constructor() {
       super();
       this._isArchived;
       this.type = 'Client';
+      this.clientInventory = new ClientInventory();
     }
 
     static aggregateName() {
@@ -59,9 +60,13 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
             unArchivedDate: new Date()
           });
         },
-        'purchases': function(cmd) {
-          // add sessions to collection
+        'purchase': function(cmd) {
+          cmd.id = cmd.id || uuid.v4();
           cmd.eventName = 'sessionsPurchased';
+          var clientInventoryUpdated = this.clientInventory.calculateInventory(cmd);
+          clientInventoryUpdated.clientId = this._id;
+          clientInventoryUpdated.eventName = 'clientInventoryUpdated';
+          this.raiseEvent(clientInventoryUpdated);
           this.raiseEvent(cmd);
         }
       }
@@ -78,6 +83,9 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
         }.bind(this),
         'clientUnArchived': function (event) {
           this._isArchived = false;
+        }.bind(this),
+        'clientInventoryUpdated': function (event) {
+          this.clientInventory.setInventory(event);
         }.bind(this)
       }
     }
