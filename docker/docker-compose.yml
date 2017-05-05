@@ -1,7 +1,9 @@
 version: "2"
 services:
   workflows:
-    image: mf_workflows
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
     volumes:
       - ./../app:/home/current/app
     command: npm start #top -b #
